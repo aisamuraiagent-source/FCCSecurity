@@ -26,7 +26,8 @@ from reportlab.platypus import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCAN_DIR = ROOT / "docs/security-scans/FCCSecurity/no-head_20260618T085508-0300"
+HISTORICAL_SCAN_ID = "no-head_20260618T085508-0300"
+HISTORICAL_SCAN_DIR = ROOT / f"docs/security-scans/FCCSecurity/{HISTORICAL_SCAN_ID}"
 OUT_DIR = Path(r"C:\tmp\fccsecurity-professional-report")
 PREVIEW_DIR = OUT_DIR / "preview"
 PDF_PATH = OUT_DIR / "fccsecurity-codex-security-professional-report.pdf"
@@ -56,6 +57,21 @@ def register_fonts() -> tuple[str, str]:
 
 
 FONT, FONT_BOLD = register_fonts()
+
+
+def validate_historical_scan_artifacts() -> None:
+    required = [
+        HISTORICAL_SCAN_DIR / "report.md",
+        HISTORICAL_SCAN_DIR / "report.html",
+        HISTORICAL_SCAN_DIR / "artifacts" / "02_discovery" / "work_ledger.jsonl",
+        HISTORICAL_SCAN_DIR / "artifacts" / "05_findings" / "FCCSEC-DOC-001" / "validation_report.md",
+        HISTORICAL_SCAN_DIR / "artifacts" / "05_findings" / "FCCSEC-DOC-001" / "attack_path_analysis_report.md",
+    ]
+    missing = [str(path) for path in required if not path.exists()]
+    if missing:
+        raise FileNotFoundError(
+            "Historical scan evidence is incomplete. Missing: " + "; ".join(missing)
+        )
 
 
 def style_sheet():
@@ -236,10 +252,10 @@ def kpi_table():
     data = [
         [Paragraph("18/18", S["center"]), Paragraph("2", S["center"]), Paragraph("1", S["center"]), Paragraph("0", S["center"])],
         [
-            Paragraph("worklist rows closed", S["small"]),
-            Paragraph("candidates validated", S["small"]),
-            Paragraph("final MEDIUM finding", S["small"]),
-            Paragraph("HIGH/CRITICAL findings", S["small"]),
+            Paragraph("historical worklist rows closed", S["small"]),
+            Paragraph("historical candidates validated", S["small"]),
+            Paragraph("historical final MEDIUM finding", S["small"]),
+            Paragraph("historical HIGH/CRITICAL findings", S["small"]),
         ],
     ]
     table = Table(data, colWidths=[4.05 * cm] * 4, hAlign="LEFT")
@@ -261,11 +277,12 @@ def kpi_table():
 def evidence_table():
     rows = [
         ["Artifact", "Result"],
-        ["Scan mode", "Repository-wide defensive scan, local workspace only"],
-        ["Coverage", "18/18 rows completed with work-ledger receipts"],
+        ["Source scan", f"Historical local scan `{HISTORICAL_SCAN_ID}`"],
+        ["Scan mode", "Historical repository-wide defensive scan, local workspace only"],
+        ["Coverage", "Historical result: 18/18 rows completed with work-ledger receipts"],
         ["Runtime checks", "node --check app.js passed; unsafe DOM/network sink grep returned no runtime candidate"],
         ["Secrets check", "Refined token/private-key grep returned no secret matches"],
-        ["Final reportability", "1 MEDIUM/P2 documentation-evidence drift finding; no HIGH/CRITICAL findings"],
+        ["Final reportability", "Historical result: 1 MEDIUM/P2 documentation-evidence drift finding; no HIGH/CRITICAL findings"],
         ["Limits", "No external scan, package install, deploy, commit, or source remediation performed"],
     ]
     table = Table([[Paragraph(c, S["table_head"] if r == 0 else S["body"]) for c in row] for r, row in enumerate(rows)], colWidths=[4.3 * cm, 11.9 * cm])
@@ -290,10 +307,10 @@ def evidence_table():
 def public_safety_table():
     rows = [
         ["Pode dizer", "Evitar"],
-        ["Conduzi um scan defensivo repo-wide com evidência auditável.", "O projeto foi aprovado pela OpenAI ou por terceiros."],
-        ["Fechei 18/18 superfícies do worklist com discovery, validation e attack-path.", "O sistema está seguro, blindado ou sem vulnerabilidades."],
-        ["Identifiquei 1 finding MEDIUM de drift documental e 0 HIGH/CRITICAL.", "Houve teste contra terceiros, exploração externa ou validação em produção."],
-        ["Validei ausência de sinks DOM perigosos, segredos e dependências de runtime no escopo observado.", "O scan prova segurança geral fora do escopo analisado."],
+        [f"Documentei o scan defensivo histórico `{HISTORICAL_SCAN_ID}` com evidência auditável.", "O projeto foi aprovado pela OpenAI ou por terceiros."],
+        ["Nesse scan histórico, 18/18 superfícies do worklist foram fechadas com discovery, validation e attack-path.", "O sistema está seguro, blindado ou sem vulnerabilidades."],
+        ["Nesse scan histórico, foi identificado 1 finding MEDIUM de drift documental e 0 HIGH/CRITICAL.", "Houve teste contra terceiros, exploração externa ou validação em produção."],
+        ["Nesse escopo histórico observado, não houve sinks DOM perigosos, segredos ou dependências de runtime.", "O scan prova segurança geral fora do escopo analisado."],
     ]
     table = Table([[Paragraph(c, S["callout"] if r == 0 else S["body"]) for c in row] for r, row in enumerate(rows)], colWidths=[8.1 * cm, 8.1 * cm])
     table.setStyle(
@@ -334,18 +351,18 @@ def cover_footer(canvas, doc):
 
 def build_story():
     cv_bullets = [
-        "Conduzi scan defensivo repo-wide em aplicação local-first, cobrindo runtime, documentação, deployment gates e evidência pública.",
-        "Estruturei threat model, discovery ledger, validation receipts, attack-path analysis e relatório final auditável.",
-        "Fechei 18/18 superfícies do worklist, validei 2 candidatos e classifiquei 1 finding MEDIUM de drift documental.",
-        "Validei ausência de HIGH/CRITICAL, runtime exploit path, segredos, chamadas de rede e sinks DOM perigosos no escopo observado.",
+        f"Documentei o scan defensivo histórico `{HISTORICAL_SCAN_ID}` em aplicação local-first, cobrindo runtime, documentação, deployment gates e evidência pública.",
+        "Estruturei threat model, discovery ledger, validation receipts, attack-path analysis e relatório final auditável para esse ciclo histórico.",
+        "No ciclo histórico, 18/18 superfícies do worklist foram fechadas, 2 candidatos foram validados e 1 finding MEDIUM de drift documental foi classificado.",
+        "No escopo histórico observado, validei ausência de HIGH/CRITICAL, runtime exploit path, segredos, chamadas de rede e sinks DOM perigosos.",
         "Produzi recomendações de remediação com wording público sanitizado e preservação de revisão humana.",
     ]
 
     linkedin_post = (
-        "Fechei um ciclo de revisão defensiva em um protótipo local-first de inteligência de segurança.\n\n"
+        "Documentei um ciclo histórico de revisão defensiva em um protótipo local-first de inteligência de segurança.\n\n"
         "O objetivo não foi criar uma narrativa de marketing, mas transformar um repositório pequeno em evidência auditável: "
         "threat model, discovery ledger, validation receipts, attack-path analysis e relatório final.\n\n"
-        "Resumo do ciclo:\n"
+        f"Resumo do ciclo histórico {HISTORICAL_SCAN_ID}:\n"
         "- 18/18 superfícies do worklist fechadas\n"
         "- 2 candidatos validados\n"
         "- 1 finding final MEDIUM/P2 de drift documental\n"
@@ -363,6 +380,7 @@ def build_story():
 
 
 def build_pdf():
+    validate_historical_scan_artifacts()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     PREVIEW_DIR.mkdir(parents=True, exist_ok=True)
     cv_bullets, linkedin_post, cv_text = build_story()
@@ -382,9 +400,9 @@ def build_pdf():
     story.append(CoverBlock())
     story.append(Spacer(1, -16.5 * cm))
     story.append(Paragraph("FCC Security", S["title"]))
-    story.append(Paragraph("Relatorio profissional de scan defensivo, evidencias auditaveis e narrativa publica segura", S["subtitle"]))
+    story.append(Paragraph(f"Relatorio profissional historico do scan {HISTORICAL_SCAN_ID}, evidencias auditaveis e narrativa publica segura", S["subtitle"]))
     story.append(Spacer(1, 0.55 * cm))
-    story.append(card("Resumo executivo", "Scan repo-wide local com 18/18 superficies fechadas, 2 candidatos validados, 1 finding final MEDIUM/P2 e nenhum HIGH/CRITICAL sobrevivente. O resultado relevante para portfólio e curriculo e a capacidade de transformar revisao defensiva em evidencia rastreavel.", fill=colors.HexColor("#F7FFFB"), border=colors.HexColor("#65D69D")))
+    story.append(card("Resumo executivo", f"Scan historico {HISTORICAL_SCAN_ID}: repo-wide local com 18/18 superficies fechadas, 2 candidatos validados, 1 finding final MEDIUM/P2 e nenhum HIGH/CRITICAL sobrevivente. O resultado relevante para portfolio e curriculo e a capacidade de transformar revisao defensiva em evidencia rastreavel, sem representar scans posteriores.", fill=colors.HexColor("#F7FFFB"), border=colors.HexColor("#65D69D")))
     story.append(Spacer(1, 0.4 * cm))
     story.append(Paragraph("Renan Raad - Defensive AI Security / Secure Code Review / Evidence Workflows", S["subtitle"]))
     story.append(PageBreak())
@@ -392,7 +410,7 @@ def build_pdf():
     story.append(Paragraph("1. Executive Snapshot", S["section"]))
     story.append(kpi_table())
     story.append(Spacer(1, 0.25 * cm))
-    story.append(Paragraph("Este relatorio converte o scan tecnico em uma narrativa profissional segura para curriculo, portfolio e LinkedIn. A leitura correta e: trabalho defensivo local, escopo autorizado, evidencia auditavel e claims conservadores. Nao e uma certificacao, aprovacao externa ou prova geral de seguranca fora do escopo.", S["body"]))
+    story.append(Paragraph(f"Este relatorio converte o scan tecnico historico {HISTORICAL_SCAN_ID} em uma narrativa profissional segura para curriculo, portfolio e LinkedIn. A leitura correta e: trabalho defensivo local, escopo autorizado, evidencia auditavel e claims conservadores. Nao e uma certificacao, aprovacao externa, prova geral de seguranca fora do escopo ou resumo automatico de scans posteriores.", S["body"]))
     story.append(evidence_table())
     story.append(Spacer(1, 0.2 * cm))
     story.append(card("Finding final reportavel", "MEDIUM/P2 - wording publico/OpenAI-facing estava amplo demais ao afirmar postura static-only/no-dependency sem separar o runtime deployavel do tooling Python local opcional.", fill=PALE_BLUE, border=BLUE))
@@ -411,7 +429,7 @@ def build_pdf():
     story.append(PageBreak())
     story.append(Paragraph("3. Texto para curriculo", S["section"]))
     story.append(Paragraph("Versao curta para experiencia/projeto:", S["h3"]))
-    story.append(card("Defensive AI Security - FCC Security", "Conduzi scan defensivo repo-wide em prototipo local-first de seguranca, estruturando threat model, discovery ledger, validation receipts, attack-path analysis e relatorio auditavel. Fechei 18/18 superficies do worklist, validei 2 candidatos e classifiquei 1 finding MEDIUM de drift documental, sem findings HIGH/CRITICAL no escopo observado.", fill=colors.white, border=ACCENT))
+    story.append(card("Defensive AI Security - FCC Security", f"Documentei o scan defensivo historico {HISTORICAL_SCAN_ID} em prototipo local-first de seguranca, estruturando threat model, discovery ledger, validation receipts, attack-path analysis e relatorio auditavel. Nesse ciclo, 18/18 superficies do worklist foram fechadas, 2 candidatos foram validados e 1 finding MEDIUM de drift documental foi classificado, sem findings HIGH/CRITICAL no escopo observado.", fill=colors.white, border=ACCENT))
     story.append(Paragraph("Bullets recomendados:", S["h3"]))
     story.append(bullets(cv_bullets))
     story.append(Paragraph("Headline possivel:", S["h3"]))
@@ -430,12 +448,12 @@ def build_pdf():
 
     story.append(PageBreak())
     story.append(Paragraph("5. Evidencia e limites", S["section"]))
-    story.append(Paragraph("O relatorio tecnico validado esta em:", S["body"]))
+    story.append(Paragraph(f"O relatorio tecnico historico validado esta em `{HISTORICAL_SCAN_ID}`:", S["body"]))
     story.append(bullets([
-        "docs/security-scans/FCCSecurity/no-head_20260618T085508-0300/report.md",
-        "docs/security-scans/FCCSecurity/no-head_20260618T085508-0300/report.html",
-        "artifacts/02_discovery/work_ledger.jsonl - 18/18 recibos de cobertura",
-        "artifacts/05_findings/FCCSEC-DOC-001 - validation e attack-path do finding final",
+        f"docs/security-scans/FCCSecurity/{HISTORICAL_SCAN_ID}/report.md",
+        f"docs/security-scans/FCCSecurity/{HISTORICAL_SCAN_ID}/report.html",
+        f"docs/security-scans/FCCSecurity/{HISTORICAL_SCAN_ID}/artifacts/02_discovery/work_ledger.jsonl - 18/18 recibos de cobertura historica",
+        f"docs/security-scans/FCCSecurity/{HISTORICAL_SCAN_ID}/artifacts/05_findings/FCCSEC-DOC-001 - validation e attack-path do finding final historico",
     ]))
     story.append(Spacer(1, 0.2 * cm))
     story.append(card("Limites publicos", "Nao dizer que houve aprovacao da OpenAI, auditoria externa independente, deploy em producao, scan ofensivo ou garantia de seguranca. O resultado e um artefato defensivo local, escopado e auditavel.", fill=colors.HexColor("#FFF8E8"), border=colors.HexColor("#F0B429")))

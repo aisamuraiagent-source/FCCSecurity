@@ -4,10 +4,12 @@ Date: 2026-06-18
 
 ## Status
 
-- Remote PR created: no
-- Reason: no Git remote is configured in this local repository.
-- Local branch: `main`
-- Record type: local pull-request surrogate for audit trail only.
+- Remote PR created for this remediation: no.
+- Historical note: this file began as a local pull-request surrogate before the private GitHub remote was configured.
+- Current local branch: `main`.
+- Current remote: `origin` -> `https://github.com/aisamuraiagent-source/FCCSecurity.git`.
+- Current sync state observed on 2026-06-18: `main...origin/main` at `fd52562`.
+- Record type: historical local remediation record plus current private-remote audit context.
 
 ## Original Git Directory Blocker
 
@@ -48,11 +50,8 @@ Results:
 - Sensitive local path grep returned no matches in live checked docs.
 - Runtime sink grep returned no matches.
 
-## Remote Follow-Up
+## Remote State
 
-To turn this local record into a real GitHub PR later:
+The private GitHub repository now exists and `main` has been pushed. This file is not evidence that no remote exists; it preserves the earlier local-only remediation context and records the later private-remote state.
 
-1. Configure an authorized private GitHub remote.
-2. Create a feature branch from this commit.
-3. Push the branch.
-4. Open a draft PR with this record as the body seed.
+Current release-gate rule: keep the repository private and do not create a public GitHub release, GitHub Pages deployment, Netlify deployment, or visibility change until the public release gate is closed.
