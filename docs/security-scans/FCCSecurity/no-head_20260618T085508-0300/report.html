@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FCCSecurity Codex Security Scan</title>
+  <style>
+    body { margin: 0; font: 15px/1.55 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #111827; background: #f8fafc; }
+    main { max-width: 1040px; margin: 0 auto; padding: 32px 24px 72px; background: #fff; min-height: 100vh; }
+    h1, h2, h3 { line-height: 1.2; }
+    h1 { margin-top: 0; }
+    h2 { border-top: 1px solid #e5e7eb; padding-top: 24px; margin-top: 32px; }
+    code { background: #f3f4f6; border-radius: 4px; padding: 0.1em 0.3em; }
+    table { border-collapse: collapse; width: 100%; margin: 16px 0 24px; }
+    th, td { border: 1px solid #e5e7eb; padding: 8px 10px; vertical-align: top; text-align: left; }
+    th { background: #f3f4f6; }
+    .finding { border-left: 4px solid #2563eb; padding-left: 16px; }
+    .note { color: #4b5563; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Security Review: FCCSecurity</h1>
+
+  <h2>Scope</h2>
+  <ul>
+    <li>Scan mode: Codex Security repository-wide scan.</li>
+    <li>Repository root: <code>C:\Users\vtcom\OneDrive\Documentos\FCCSecurity</code>.</li>
+    <li>Scan id: <code>no-head_20260618T085508-0300</code>.</li>
+    <li>Markdown source: <code>report.md</code>.</li>
+    <li>Artifact bundle: <code>docs/security-scans/FCCSecurity/no-head_20260618T085508-0300</code>.</li>
+    <li>No external network scan, package install, deploy, commit, push, or source remediation was performed.</li>
+  </ul>
+
+  <h3>Scan Summary</h3>
+  <table>
+    <tr><th>Field</th><th>Value</th></tr>
+    <tr><td>Reportable findings</td><td>1</td></tr>
+    <tr><td>Severity mix</td><td>1 MEDIUM</td></tr>
+    <tr><td>Worklist coverage</td><td>18/18 rows completed</td></tr>
+    <tr><td>Raw candidates</td><td>2</td></tr>
+    <tr><td>Suppressed after attack-path</td><td>1</td></tr>
+    <tr><td>Validation</td><td>Markdown report passed the Codex Security validator.</td></tr>
+  </table>
+
+  <h2>Findings</h2>
+  <table>
+    <tr><th>Severity</th><th>Confidence</th><th>Finding</th><th>Category</th></tr>
+    <tr>
+      <td>MEDIUM</td>
+      <td>medium-high</td>
+      <td>OpenAI-facing wording overstates no dependency install/static-only posture while repo contains optional Python PDF tooling with third-party imports</td>
+      <td>Documentation/evidence drift</td>
+    </tr>
+  </table>
+
+  <section class="finding">
+    <h3>[1] OpenAI-facing wording overstates no dependency install/static-only posture while repo contains optional Python PDF tooling with third-party imports</h3>
+    <table>
+      <tr><th>Field</th><th>Value</th></tr>
+      <tr><td>Severity</td><td>MEDIUM</td></tr>
+      <tr><td>Priority</td><td>P2</td></tr>
+      <tr><td>CWE</td><td>none</td></tr>
+      <tr><td>Affected lines</td><td><code>docs/openai/openai_deploy_review_request.md:29-30</code>; <code>docs/openai/openai_developer_forum_post.md:28,30</code>; <code>docs/threat-model/threat_model.md:48</code>; <code>scripts/generate_profile_pdfs.py:8-17,31</code></td></tr>
+    </table>
+    <p>The OpenAI-facing and threat-model wording describes the project as static HTML/CSS/JavaScript only and says there is no dependency install. That is accurate for the deployable dashboard runtime, but the repository also contains optional local PDF tooling in <code>scripts/generate_profile_pdfs.py</code> that imports <code>PIL</code>, <code>pypdf</code>, <code>reportlab</code>, and optionally <code>pypdfium2</code>.</p>
+    <p>Validation used full-file line-numbered static review, targeted <code>rg</code>, and repo-state checks. No package-manager manifest was found, and no runtime unsafe DOM sink, secret exposure, external deploy, or OpenAI affiliation/approval claim was observed.</p>
+    <p>Severity is MEDIUM because the issue crosses the documentation/evidence boundary defined by the threat model: reviewers may consume these docs as public or OpenAI-facing evidence and infer a broader no-dependency/static-only claim than the repository supports.</p>
+    <p>Recommended fix: scope no-dependency/static-only wording to the deployable dashboard runtime and document optional local Python PDF tooling separately.</p>
+  </section>
+
+  <h2>Reviewed Surfaces</h2>
+  <table>
+    <tr><th>Surface</th><th>Risk Area</th><th>Outcome</th><th>Notes</th></tr>
+    <tr><td>Browser UI runtime</td><td>DOM injection / dynamic execution</td><td>No issue found</td><td><code>createElement</code>/<code>textContent</code> rendering; no unsafe DOM, dynamic code, network, or external resource sinks.</td></tr>
+    <tr><td>Browser UI runtime</td><td>SSRF / network fetch</td><td>Not applicable</td><td>No browser network clients or external resource references found.</td></tr>
+    <tr><td>Local storage and snapshot export</td><td>Sensitive localStorage / export leakage</td><td>No issue found</td><td>Notes remain browser-local; export is local user-triggered Blob download.</td></tr>
+    <tr><td>Runtime auth/session/backend</td><td>Auth/authz/session bypass</td><td>Not applicable</td><td>No backend, database, login, token, API, session, or remote service exists.</td></tr>
+    <tr><td>Local PDF tooling</td><td>File/path write impact</td><td>No issue found</td><td>Writes fixed local artifacts under configured output root; no untrusted remote input, archive extraction, deletion, shell execution, or network call found.</td></tr>
+    <tr><td>Local PDF tooling plus OpenAI docs</td><td>Dependency/claim drift</td><td>Reported</td><td>Became finding <code>FCCSEC-DOC-001</code>.</td></tr>
+    <tr><td>Public evidence docs</td><td>Path metadata disclosure</td><td>Rejected</td><td>Validated as real metadata exposure, then suppressed by attack-path policy because impact is low and no secret/runtime sink exists.</td></tr>
+    <tr><td>Public/OpenAI wording</td><td>Approval/affiliation overclaim</td><td>No issue found</td><td>Docs explicitly state no OpenAI approval, endorsement, sponsorship, affiliation, or external deployment.</td></tr>
+    <tr><td>Deployment docs</td><td>Release-gate bypass</td><td>No issue found</td><td>Release gate blocks publishing current local package unchanged and forbids backend/login/API keys/telemetry/remote ingestion/automated scanning.</td></tr>
+    <tr><td>Repository text</td><td>Secret exposure</td><td>No issue found</td><td>Refined token/key grep returned no secret matches.</td></tr>
+    <tr><td>Runtime package surface</td><td>Package dependency risk</td><td>Not applicable</td><td>No package manager manifest or lockfile found for the deployable runtime.</td></tr>
+  </table>
+
+  <h2>Artifacts</h2>
+  <ul>
+    <li><code>report.md</code>: canonical validated Markdown report.</li>
+    <li><code>artifacts/02_discovery/work_ledger.jsonl</code>: 18/18 file-review receipts.</li>
+    <li><code>artifacts/02_discovery/raw_candidates.jsonl</code>: discovery candidates.</li>
+    <li><code>artifacts/03_coverage/repository_coverage_ledger.md</code>: coverage ledger.</li>
+    <li><code>artifacts/05_findings/FCCSEC-DOC-001/</code>: validation and attack-path reports for the surviving finding.</li>
+  </ul>
+
+  <p class="note">The official renderer produced an HTML file in <code>C:\tmp\fccsecurity_report_20260618.html</code>. Direct shell copy into OneDrive was denied, so this readable HTML entry point was written via patch. The validated Markdown remains the source of truth.</p>
+</main>
+</body>
+</html>

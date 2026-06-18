@@ -1,0 +1,2 @@
+{"candidate_id":"FCS-DOC-PATH-001","raw_candidate_ids":["FCS-DOC-PATH-001"],"dedupe_decision":"preserved","reason":"Distinct public evidence path disclosure instance; no merge with dependency wording drift."}
+{"candidate_id":"FCCSEC-DOC-001","raw_candidate_ids":["FCCSEC-DOC-001"],"dedupe_decision":"preserved","reason":"Distinct public wording/static-only dependency-scope drift; no merge with local path disclosure."}

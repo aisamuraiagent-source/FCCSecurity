@@ -1,0 +1,36 @@
+# Local generated outputs
+output/
+tmp/
+*.log
+
+# Environment and secrets
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+
+# Python local artifacts
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node local artifacts, if added later
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local reports generated outside repository policy
+*.tmp
+*.bak

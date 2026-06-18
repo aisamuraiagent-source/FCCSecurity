@@ -1,0 +1,55 @@
+# FCC Security
+
+Frontier Cyber Intelligence e um painel local-first para organizar sinais defensivos, threat model, validacao e evidencia operacional com Codex.
+
+Estado atual: prototipo estatico executavel. Nao ha backend, banco, login, API externa, dependencia de build ou telemetria.
+
+## Como executar
+
+Abra `index.html` diretamente no navegador ou sirva a pasta localmente:
+
+```powershell
+python -m http.server 4173 --bind 127.0.0.1
+```
+
+Depois acesse:
+
+```text
+http://127.0.0.1:4173/
+```
+
+## Superficies
+
+- `index.html`: estrutura da interface.
+- `styles.css`: sistema visual responsivo.
+- `app.js`: dados locais, estado, filtros, selecao de sinais, ledger e exportacao.
+- `docs/threat-model/threat_model.md`: threat model base para Codex Security.
+- `docs/evidence/implementation_evidence.md`: inventario da primeira entrega.
+- `docs/validation/local_validation.md`: evidencia de validacao local.
+
+## Codex Security
+
+O scan repo-wide Codex Security foi executado em 2026-06-16 com cobertura sobre runtime, documentacao, threat model e manifestos de deploy. Resultado final: zero findings reportaveis sobreviventes; uma divergencia documental de status foi corrigida e suprimida antes do relatorio final.
+
+Relatorios locais:
+
+```text
+C:\tmp\codex-security-scans\FCCSecurity\no-head_20260616T102807-0300\report.md
+C:\tmp\codex-security-scans\FCCSecurity\no-head_20260616T102807-0300\report.html
+```
+
+## Pacote local
+
+O pacote estatico de entrega deve ser gerado em:
+
+```text
+C:\tmp\fccsecurity-frontier-cyber-intelligence.zip
+```
+
+Manifesto: `docs/deployment/deploy_manifest.md`.
+
+## Limites
+
+- Os dados do painel sao exemplos locais para estruturar fluxo defensivo.
+- Nao existe ingestao automatica de logs ou alertas reais.
+- Nao houve deploy externo nesta etapa.
