@@ -13,16 +13,16 @@ Confidence: 0.86
 ## Rubric
 
 - [x] Claimed files and affected lines exist.
-- [x] Claimed lines contain absolute local workstation paths or `file:///C:/Users/...` URLs.
+- [x] Claimed lines contained absolute local workstation paths or local `file:///...` URLs before sanitization.
 - [x] Paths reveal local username/workstation directory layout rather than project-relative evidence.
 - [x] Content sits in evidence/validation documentation likely to be shared as audit material.
 - [x] No secret/token was observed in the reviewed lines, so impact is bounded to local path disclosure.
 
 ## Evidence Observed
 
-- `docs/evidence/implementation_evidence.md:5` contains an unredacted local repository path under `C:\Users\vtcom\...`.
-- `docs/evidence/implementation_evidence.md:35` contains an unredacted `.codex\generated_images\...` path.
-- `docs/validation/local_validation.md:12-14` contain Chrome commands with `file:///C:/Users/vtcom/.../FCCSecurity/index.html`.
+- `docs/evidence/implementation_evidence.md:5` contains an unredacted local repository path under `<user_profile>\...`.
+- `docs/evidence/implementation_evidence.md:35` contained an unredacted local Codex generated-image cache path.
+- `docs/validation/local_validation.md:12-14` contain Chrome commands with `file:///<user_profile>/.../FCCSecurity/index.html`.
 
 Validation command evidence:
 

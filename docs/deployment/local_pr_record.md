@@ -6,12 +6,12 @@ Date: 2026-06-18
 
 - Remote PR created: no
 - Reason: no Git remote is configured in this local repository.
-- Local branch: `master`
+- Local branch: `main`
 - Record type: local pull-request surrogate for audit trail only.
 
 ## Original Git Directory Blocker
 
-The original repository Git directory could not create `index.lock`, so local `git add` and `git commit` were blocked in the source checkout. ACL inspection showed explicit `Deny` entries on `<repo_root>/.git`; approved attempts to remove or reset those ACL entries returned access-denied errors, including from an elevated process. The commit for this remediation was therefore produced in the approved mirror at `C:\tmp\FCCSecurity-commit-mirror`.
+The original repository Git directory could not create lock files, so local `git add` and `git commit` were blocked in the source checkout. ACL inspection showed explicit `Deny` entries on `<repo_root>/.git`; approved attempts to remove or reset those ACL entries returned access-denied errors, including from an elevated process. The commit-ready workspace was therefore produced in the approved clean copy at `C:\tmp\FCCSecurity-clean`.
 
 ## Title
 

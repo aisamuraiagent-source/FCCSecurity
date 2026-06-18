@@ -2,7 +2,7 @@
 
 Scan: `no-head_20260618T085508-0300`
 
-Scope: repository-wide scan of `C:\Users\vtcom\OneDrive\Documentos\FCCSecurity`.
+Scope: repository-wide scan of `<repo_root>`.
 
 Threat model source: `artifacts/01_context/threat_model.md`.
 

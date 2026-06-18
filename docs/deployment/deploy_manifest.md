@@ -41,7 +41,7 @@ C:\tmp\fccsecurity-frontier-cyber-intelligence.zip.sha256
 
 - `.git`
 - local browser screenshots under `C:\tmp`
-- generated image source under `C:\Users\vtcom\.codex\generated_images`
+- generated image source under `<local_codex_image_cache>\generated_images`
 - any external credentials, keys, caches, or machine-local browser profile data
 
 ## Deployment Boundary

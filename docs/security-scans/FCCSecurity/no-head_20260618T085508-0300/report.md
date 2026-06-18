@@ -3,7 +3,7 @@
 ## Scope
 
 - Scan mode: Codex Security repository-wide scan.
-- Repository root: `C:\Users\vtcom\OneDrive\Documentos\FCCSecurity`.
+- Repository root: `<repo_root>`.
 - Scan id: `no-head_20260618T085508-0300`.
 - Context source: existing repository threat model copied without alteration to `artifacts/01_context/threat_model.md`.
 - In-scope surfaces: static runtime files, local PDF tooling, repository governance, threat model, validation/evidence docs, deployment docs, and OpenAI/public-prep docs.
@@ -212,4 +212,4 @@ Evidence that would lower severity: wording changed to clearly scope no-dependen
 
 - Patch the wording in `docs/openai/openai_deploy_review_request.md`, `docs/openai/openai_developer_forum_post.md`, and `docs/threat-model/threat_model.md` to scope no-dependency/static-only claims to the deployable runtime.
 - Optionally sanitize absolute local paths in `docs/evidence/implementation_evidence.md` and `docs/validation/local_validation.md` as a hygiene backlog item before public release.
-- After remediation, re-run targeted grep for `C:\Users\vtcom`, `file:///C:/Users`, `.codex`, `static HTML`, and `dependency install`.
+- After remediation, re-run targeted grep for `<user_profile>`, `file:///C:/Users`, `.codex`, `static HTML`, and `dependency install`.

@@ -10,7 +10,7 @@ Priority: none
 
 ## Attack Path
 
-1. Evidence/validation Markdown contains local workstation paths under `C:\Users\vtcom\...` and `file:///C:/Users/...`.
+1. Evidence/validation Markdown contained local workstation paths and local `file:///...` URLs before sanitization.
 2. If these documents are published or shared externally, a reader can observe the workstation username and local path conventions.
 3. The exposed values are metadata only; no credential, token, private incident data, runtime sink, backend, or deploy path is present in the affected lines.
 
