@@ -10,13 +10,14 @@ Recommended path: request wording/release review first, then publish a sanitized
 
 Do not publish the current local package unchanged. It contains local artifact paths and internal evidence references that are useful for audit but should be sanitized before public release.
 
-Current gate status on 2026-06-16:
+Current gate status:
 
 ```text
 OpenAI Developer Community submission created.
 Account temporarily on hold by automated moderation pending staff review.
 No OpenAI approval, endorsement, or release authorization has been received.
-Private GitHub, public GitHub, GitHub Pages, and Netlify remain blocked by user decision until review.
+Private GitHub repository created on 2026-06-18 for controlled review only.
+Public GitHub, GitHub Pages, Netlify, and any public static deployment remain blocked until review.
 ```
 
 ## Release Options
@@ -93,12 +94,13 @@ C:\tmp\fccsecurity-frontier-cyber-intelligence.zip.sha256
 
 ## Release Checklist
 
-- [ ] Sanitize absolute local paths from public docs.
+- [x] Sanitize absolute local paths from public docs.
 - [ ] Add public disclaimer to README.
 - [ ] Keep scan result factual: "zero reportable findings survived" instead of "secure".
 - [ ] Keep OpenAI references secondary and factual.
 - [ ] Remove or rewrite any phrase that implies OpenAI approval before approval exists.
-- [ ] Wait for review before creating private GitHub under the current user decision.
+- [x] Create private GitHub repository for controlled review.
+- [ ] Keep private GitHub repository private until the release gate is closed.
 - [ ] Deploy static preview only after review/sanitation.
 - [ ] Re-run `node --check app.js`.
 - [ ] Re-run runtime sink grep.

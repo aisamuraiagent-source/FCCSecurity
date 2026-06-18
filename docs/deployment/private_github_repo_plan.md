@@ -8,10 +8,11 @@ Purpose: define the controlled path from local evidence to private GitHub, then 
 
 Do not create a public repository first. Create a private repository only after the review packet is ready and the public wording has been sanitized.
 
-Current user decision on 2026-06-16:
+Current user decision/status:
 
 ```text
-Wait for OpenAI Developer Community/staff review before creating the private GitHub repository.
+Private GitHub repository created on 2026-06-18 for controlled review.
+Keep the repository private until the public release gate is deliberately closed.
 ```
 
 The Developer Community account is temporarily on hold pending staff review. This is not approval, endorsement, partnership, or release authorization.
@@ -21,7 +22,7 @@ The Developer Community account is temporarily on hold pending staff review. Thi
 Recommended private repository name:
 
 ```text
-fccsecurity-frontier-cyber-intelligence
+FCCSecurity
 ```
 
 Safer public-facing name if "cyber intelligence" is considered too broad:
@@ -73,10 +74,10 @@ Do not include:
 
 ## Manual GitHub Steps
 
-1. Create a new private GitHub repository.
+1. Create a new private GitHub repository. Completed on 2026-06-18.
 2. Do not enable GitHub Pages yet.
-3. Commit the local project after final sanitation.
-4. Push to the private remote.
+3. Commit the local project after final sanitation. Completed locally.
+4. Push to the private remote. Completed for `main`.
 5. Attach the sanitized review packet only if needed for reviewers.
 6. Open an issue titled `Release gate: OpenAI wording and static deploy review`.
 7. Paste the checklist from `docs/deployment/public_release_gate.md`.

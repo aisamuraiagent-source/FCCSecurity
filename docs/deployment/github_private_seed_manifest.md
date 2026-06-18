@@ -2,7 +2,7 @@
 
 Date: 2026-06-16
 
-Purpose: describe the sanitized local seed prepared for a future private GitHub repository.
+Purpose: describe the sanitized local seed prepared for the private GitHub repository.
 
 ## Seed Location
 
@@ -24,7 +24,15 @@ C:\tmp\fccsecurity-private-github-seed.zip.sha256
 
 ## Intended Use
 
-This seed is for a private GitHub repository only. It is not proof of OpenAI approval and it is not a static deployment package.
+This seed is for the private GitHub repository only. It is not proof of OpenAI approval and it is not a static deployment package.
+
+Current repository:
+
+```text
+https://github.com/aisamuraiagent-source/FCCSecurity
+```
+
+Visibility must remain private until the public release gate is closed.
 
 ## Sanitization Rules
 
