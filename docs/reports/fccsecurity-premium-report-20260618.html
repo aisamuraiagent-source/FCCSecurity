@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Relatório Premium - FCC Security</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #5b6473;
+      --line: #d9dee8;
+      --soft: #f5f7fb;
+      --accent: #0f766e;
+      --accent-2: #1d4ed8;
+      --gold: #b7791f;
+    }
+    @page { size: A4; margin: 16mm; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: white;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.45;
+      font-size: 11.2pt;
+    }
+    .cover {
+      min-height: 250mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--line);
+      padding: 22mm 18mm;
+      background: linear-gradient(135deg, #ffffff 0%, #f6fbfa 52%, #f4f7ff 100%);
+    }
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      font-size: 8.6pt;
+      font-weight: 700;
+      margin: 0 0 10mm;
+    }
+    h1 {
+      margin: 0;
+      font-size: 30pt;
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      max-width: 155mm;
+      margin-top: 7mm;
+      color: var(--muted);
+      font-size: 13pt;
+    }
+    .cover-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4mm;
+      margin-top: 16mm;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.78);
+      padding: 5mm;
+      min-height: 26mm;
+    }
+    .metric strong { display: block; font-size: 16pt; color: var(--accent-2); }
+    .metric span { color: var(--muted); font-size: 9pt; }
+    .stamp {
+      border-top: 1px solid var(--line);
+      padding-top: 7mm;
+      color: var(--muted);
+      font-size: 9.4pt;
+    }
+    .page-break { page-break-before: always; }
+    h2 {
+      margin: 0 0 5mm;
+      color: var(--ink);
+      font-size: 17pt;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 2mm;
+    }
+    h3 { margin: 7mm 0 2.5mm; font-size: 12.5pt; }
+    p { margin: 0 0 3.5mm; }
+    .section { margin-bottom: 8mm; }
+    .card {
+      border: 1px solid var(--line);
+      background: var(--soft);
+      padding: 5mm;
+      margin: 4mm 0;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5mm;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 4mm 0;
+      font-size: 9.6pt;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 2.6mm 3mm;
+      vertical-align: top;
+    }
+    th { background: #eef3f8; text-align: left; }
+    .value-box {
+      border: 2px solid var(--gold);
+      background: #fffaf0;
+      padding: 6mm;
+      margin: 5mm 0;
+    }
+    .value-box .amount {
+      font-size: 26pt;
+      font-weight: 800;
+      color: #8a5a12;
+      margin: 0;
+    }
+    .note { color: var(--muted); font-size: 9pt; }
+    ul { margin: 2mm 0 4mm 5mm; padding-left: 5mm; }
+    li { margin-bottom: 2mm; }
+    code {
+      font-family: Consolas, monospace;
+      font-size: 9pt;
+      background: #eef2f7;
+      padding: 0.4mm 1mm;
+      border-radius: 2mm;
+    }
+    .signature {
+      margin-top: 12mm;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 8mm;
+      align-items: end;
+    }
+    .sig-line {
+      border-top: 1.5px solid var(--ink);
+      padding-top: 3mm;
+    }
+    .seal {
+      border: 1px solid var(--line);
+      padding: 5mm;
+      background: #fafafa;
+      font-size: 9pt;
+    }
+    .footer {
+      margin-top: 8mm;
+      padding-top: 4mm;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 8.8pt;
+    }
+  </style>
+</head>
+<body>
+  <section class="cover">
+    <div>
+      <p class="eyebrow">Relatório Premium Defensivo Local</p>
+      <h1>FCC Security<br>Frontier Cyber Intelligence</h1>
+      <p class="subtitle">Diagnóstico, recuperação operacional, hardening local-first, validação auditável e precificação técnica do job executado em ambiente local.</p>
+      <div class="cover-grid">
+        <div class="metric"><strong>100%</strong><span>Fluxo local, sem nuvem ativa</span></div>
+        <div class="metric"><strong>17</strong><span>Arquivos no pacote sanitizado</span></div>
+        <div class="metric"><strong>0</strong><span>Sinks perigosos encontrados na validação final</span></div>
+      </div>
+    </div>
+    <div class="stamp">
+      <p><strong>Data:</strong> 18/06/2026</p>
+      <p><strong>Workspace validado:</strong> <code>C:\tmp\FCCSecurity-clean-20260618T202007</code></p>
+      <p><strong>Pacote:</strong> <code>C:\tmp\FCCSecurity-clean-local-package-20260618.zip</code></p>
+    </div>
+  </section>
+
+  <section class="page-break section">
+    <h2>1. Sumário Executivo</h2>
+    <p>O caso começou como bloqueio persistente de escrita no projeto FCCSecurity dentro do OneDrive. A análise demonstrou que o problema prático não era falta simples de ACL, mas interferência de proteção de pasta controlada e do fluxo protegido do OneDrive. A solução correta foi preservar evidência, criar backup integral, reconstruir um workspace limpo em <code>C:\tmp</code> e consolidar o projeto como aplicação local-first auditável.</p>
+    <div class="card">
+      <p><strong>Resultado:</strong> projeto local completo, validado, empacotado, sem GitHub ativo, sem deploy, sem instalação de dependências, sem commit/push e sem alteração em Defender, OneDrive, ACL ou permissões do sistema.</p>
+    </div>
+    <table>
+      <tr><th>Área</th><th>Estado final</th></tr>
+      <tr><td>Operação local</td><td>Workspace principal em <code>C:\tmp\FCCSecurity-clean-20260618T202007</code>.</td></tr>
+      <tr><td>Backup</td><td>Backup preservado em <code>C:\tmp\FCCSecurity-backup-20260618T202007\FCCSecurity</code>.</td></tr>
+      <tr><td>Aplicação</td><td>HTML/CSS/JavaScript estático com views funcionais Board, Evidence e Validate.</td></tr>
+      <tr><td>Segurança</td><td>Hardening de storage, limite de notas, exportPolicy, sem sinks perigosos e sem chamadas de rede.</td></tr>
+      <tr><td>Validação</td><td>Validador local reexecutável, Chrome headless, screenshot, pacote ZIP e SHA-256.</td></tr>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>2. Insights Que Resolveram o Caso</h2>
+    <table>
+      <tr><th>#</th><th>Insight</th><th>Efeito prático</th></tr>
+      <tr><td>1</td><td>Separar problema local de problema de nuvem.</td><td>Evita deletar ou publicar errado. O GitHub não era o bloqueio de escrita; o bloqueio estava no caminho OneDrive.</td></tr>
+      <tr><td>2</td><td>ACL permissiva não prova capacidade real de escrita.</td><td>A camada de Controlled Folder Access/OneDrive podia bloquear mesmo com permissões aparentes corretas.</td></tr>
+      <tr><td>3</td><td>Desvio operacional seguro é melhor que abrir permissões amplas.</td><td>Usar <code>C:\tmp</code> preservou segurança do Windows e recuperou produtividade sem reduzir controle.</td></tr>
+      <tr><td>4</td><td>Backup antes de reconstrução.</td><td>Preservou evidência e reduziu risco de perda de contexto técnico.</td></tr>
+      <tr><td>5</td><td>Clean tree precisa carregar só o que é ativo.</td><td>Artefatos brutos antigos e referências de scan/deploy foram removidos do fluxo limpo.</td></tr>
+      <tr><td>6</td><td>Validação reexecutável vale mais que validação narrativa.</td><td><code>scripts\validate-local.js</code> virou gate local sem dependências.</td></tr>
+      <tr><td>7</td><td>Frontend local também precisa contrato funcional.</td><td>Views Board, Evidence e Validate deixaram de ser apenas botões ativos e passaram a controlar painéis reais.</td></tr>
+      <tr><td>8</td><td>Notas locais são evidência, não cofre.</td><td>Foram criados limite de tamanho, wrappers seguros e metadados explícitos de exportação.</td></tr>
+    </table>
+  </section>
+
+  <section class="section page-break">
+    <h2>3. Conhecimento Aplicado</h2>
+    <div class="two-col">
+      <div class="card">
+        <h3>Nível técnico classificado</h3>
+        <p><strong>Sênior / Lead em segurança defensiva local-first.</strong></p>
+        <p class="note">Classificação baseada em diagnóstico multi-camada, preservação de evidência, menor privilégio, hardening de runtime, documentação auditável e validação automatizada.</p>
+      </div>
+      <div class="card">
+        <h3>Domínios demonstrados</h3>
+        <ul>
+          <li>Windows endpoint e Controlled Folder Access.</li>
+          <li>Threat modeling e AppSec frontend.</li>
+          <li>Hardening local-first sem dependências.</li>
+          <li>Evidence engineering e cadeia de custódia local.</li>
+          <li>Validação automatizada e empacotamento sanitizado.</li>
+        </ul>
+      </div>
+    </div>
+    <h3>Classificação do trabalho</h3>
+    <table>
+      <tr><th>Critério</th><th>Nível</th><th>Justificativa</th></tr>
+      <tr><td>Complexidade técnica</td><td>Alta</td><td>Interação entre filesystem protegido, sandbox, OneDrive, Defender, frontend e evidência.</td></tr>
+      <tr><td>Risco operacional</td><td>Médio a alto</td><td>Possibilidade de perda de arquivos, exposição pública indevida ou redução de controles do sistema.</td></tr>
+      <tr><td>Qualidade de entrega</td><td>Premium defensivo</td><td>Inclui backup, reconstrução, hardening, documentação, validação e pacote verificável.</td></tr>
+      <tr><td>Reusabilidade</td><td>Alta</td><td>Validador local e documentação permitem repetir auditoria sem depender de nuvem.</td></tr>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>4. Valor Técnico do Job</h2>
+    <p>O valor abaixo é uma estimativa profissional de referência para escopo técnico defensivo semelhante. Não é nota fiscal, contrato de cobrança, garantia comercial ou promessa de resultado externo.</p>
+    <div class="value-box">
+      <p class="amount">R$ 18.000,00</p>
+      <p><strong>Valor técnico estimado do job completo.</strong></p>
+      <p class="note">Faixa razoável de mercado para escopo equivalente: R$ 12.000,00 a R$ 24.000,00, variando conforme urgência, responsabilidade formal, ambiente, documentação exigida e necessidade de suporte posterior.</p>
+    </div>
+    <table>
+      <tr><th>Componente</th><th>Valor estimado</th><th>Base técnica</th></tr>
+      <tr><td>Diagnóstico Windows/OneDrive/Defender/sandbox</td><td>R$ 3.000,00</td><td>Identificação de causa prática sem reduzir controles do sistema.</td></tr>
+      <tr><td>Backup, reconstrução local e saneamento de escopo</td><td>R$ 3.500,00</td><td>Preservação de evidência, clean workspace e separação de nuvem.</td></tr>
+      <tr><td>Hardening frontend local-first</td><td>R$ 4.000,00</td><td>Storage seguro, limite de notas, export policy, views funcionais e acessibilidade.</td></tr>
+      <tr><td>Threat model, docs e evidência auditável</td><td>R$ 3.000,00</td><td>Documentação coerente, sanitizada e alinhada ao estado real.</td></tr>
+      <tr><td>Validador local, navegador headless e pacote verificável</td><td>R$ 3.500,00</td><td>Automação de gates, renderização real, ZIP local e SHA-256.</td></tr>
+      <tr><td>Relatório premium e assinatura</td><td>R$ 1.000,00</td><td>Síntese executiva, classificação técnica e precificação.</td></tr>
+    </table>
+  </section>
+
+  <section class="section page-break">
+    <h2>5. Evidência Técnica</h2>
+    <table>
+      <tr><th>Item</th><th>Evidência</th></tr>
+      <tr><td>Validador local</td><td><code>node scripts\validate-local.js</code> retornou <code>local validation passed</code>.</td></tr>
+      <tr><td>Sintaxe JS</td><td><code>node --check app.js</code> passou.</td></tr>
+      <tr><td>Renderização real</td><td>Chrome headless abriu <code>file:///C:/tmp/FCCSecurity-clean-20260618T202007/index.html</code>.</td></tr>
+      <tr><td>Screenshot</td><td><code>C:\tmp\fccsecurity-clean-desktop.png</code>, 1440x1000, 416586 bytes.</td></tr>
+      <tr><td>Pacote local</td><td><code>C:\tmp\FCCSecurity-clean-local-package-20260618.zip</code>, 17 entradas, sem <code>.git</code>.</td></tr>
+      <tr><td>SHA-256</td><td><code>AF4697CDC5A8EE6577D9340B409C6039EC9214C6332340D79B0C51B6B8425760</code></td></tr>
+    </table>
+    <div class="card">
+      <p><strong>Limites:</strong> não houve deploy externo, varredura de terceiros, coleta de credenciais, commit, push, instalação de pacotes, alteração de Defender/OneDrive/ACL ou uso de rede.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>6. Assinatura</h2>
+    <div class="signature">
+      <div class="sig-line">
+        <p><strong>Renan Raad</strong></p>
+        <p>FCC Security / Frontier Cyber Intelligence</p>
+        <p class="note">Aceite técnico local e defensivo.</p>
+      </div>
+      <div class="seal">
+        <p><strong>Assinatura de evidência</strong></p>
+        <p>Data: 18/06/2026</p>
+        <p>Pacote SHA-256:</p>
+        <p><code>AF4697CDC5A8EE6577D9340B409C6039EC9214C6332340D79B0C51B6B8425760</code></p>
+      </div>
+    </div>
+    <div class="footer">
+      <p>Relatório produzido para uso local e defensivo. Não implica afiliação, aprovação, certificação, endosso ou parceria com terceiros. Toda conclusão de valor é estimativa técnica baseada no escopo observado e nas evidências locais geradas.</p>
+    </div>
+  </section>
+</body>
+</html>

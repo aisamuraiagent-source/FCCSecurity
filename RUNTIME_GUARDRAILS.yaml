@@ -1,0 +1,26 @@
+version: 1
+mode: local_first_defensive
+risk_classification:
+  low: record_and_monitor
+  medium: fix_or_accept_with_reason
+  high: require_human_approval_and_block_release
+  critical: suspend_flow_and_require_formal_review
+default_denies:
+  - external_network
+  - package_install
+  - deploy
+  - git_push
+  - github_write
+  - credential_access
+  - destructive_command
+  - permission_change
+controls:
+  classify_before_action: true
+  static_analysis_before_execution: true
+  mask_secrets: true
+  no_secret_logging: true
+  use_relative_public_paths: true
+  require_human_approval_for_high_or_critical: true
+  block_unknown_github_target: true
+  preserve_raw_scan_artifacts_as_local_evidence: true
+
