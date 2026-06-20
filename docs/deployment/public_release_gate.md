@@ -1,13 +1,3 @@
-# Public Release Gate
-
-Date: 2026-06-16
-
-This gate defines how to move from local evidence to a public GitHub or static deployment without overclaiming OpenAI affiliation, Codex Security results, or operational capability.
-
-## Decision
-
-Recommended path: request wording/release review first, then publish a sanitized GitHub repository, then optionally deploy a static preview.
-
 Do not publish the current local package unchanged. It contains local artifact paths and internal evidence references that are useful for audit but should be sanitized before public release.
 
 Current gate status:
