@@ -44,3 +44,36 @@ Result:
 - 11/11 deep-review rows received completion receipts.
 - 1 documentation status candidate was discovered, patched, validated, and suppressed before final report.
 - 0 reportable findings survived into the final report.
+
+
+## Release/Security Gate Review - 2026-06-20
+
+Scope: short release/security gate review requested after issue review. Focus areas were public wording, DOM safety, unexpected external communication surfaces, and local evidence consistency.
+
+Commands executed:
+
+```bash
+rg -n "OpenAI|Codex|DayBreak|official|certified|validated|production|affiliation|afili|oficial|certific|validado|producao|produção" .
+rg -n "innerHTML|outerHTML|insertAdjacentHTML|eval\(|new Function" .
+rg -n "fetch\(|XMLHttpRequest|WebSocket|api\.|http://|https://" .
+node --check app.js
+```
+
+Results:
+
+- Public wording review found OpenAI/Codex/DayBreak references concentrated in governance, review-request, release-gate, evidence, and local tooling files. No new claim of OpenAI approval, sponsorship, official affiliation, external deployment, production monitoring, offensive scanning, or security certification was introduced.
+- README now carries the public non-affiliation/no-offensive-capability disclaimer required by `docs/deployment/public_release_gate.md`.
+- Runtime DOM sink review over repository matches found no unsafe sink in `index.html`, `app.js`, or `styles.css`; matches were policy, evidence, scan-artifact, or local profile-tooling text. Disposition: `suppressed` for runtime DOM injection in the current static dashboard.
+- External communication review found no `fetch`, `XMLHttpRequest`, `WebSocket`, or `api.` runtime client in `index.html`, `app.js`, or `styles.css`; URL matches are local server instructions, OpenAI community documentation links, GitHub repository references, or scan/evidence text. Disposition: `not_applicable` for runtime external callback/API abuse in the current static dashboard.
+- `node --check app.js` passed.
+
+Limitations:
+
+- This was a short release/security gate review, not a new full repo-wide Codex Security scan.
+- External publication state, OpenAI/community response state, browser rendering screenshots, regenerated ZIP hash, and hosted static deployment were not verified in this step.
+
+Next steps:
+
+- Keep public deployment blocked until the private-review/release gate is intentionally closed.
+- If a public package is produced, regenerate the ZIP and SHA-256 after final sanitation and re-run browser smoke validation.
+- If future ingestion or backend/API surfaces are added, update the threat model before implementation and repeat DOM/network validation.

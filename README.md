@@ -48,6 +48,10 @@ C:\tmp\fccsecurity-frontier-cyber-intelligence.zip
 
 Manifesto: `docs/deployment/deploy_manifest.md`.
 
+## Aviso público
+
+FCC Security é um protótipo independente de segurança defensiva local-first de Renan Raad. Não é afiliado, endossado ou patrocinado pela OpenAI. Referências a Codex ou Codex Security descrevem ferramentas e fluxos usados durante desenvolvimento e revisão locais. O projeto não realiza varredura externa, exploração, coleta de credenciais, atividade de malware, telemetria ou monitoramento de produção.
+
 ## Limites
 
 - Os dados do painel sao exemplos locais para estruturar fluxo defensivo.

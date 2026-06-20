@@ -32,76 +32,102 @@ Best first step.
 - Attach `report.md`, `report.html`, ZIP hash, and screenshot as release artifacts or issue attachments.
 
 ### Option B: Public GitHub Repository
+### Opção B: repositório público no GitHub
 
 Use only after the public wording is sanitized.
+Usar somente depois que o texto público estiver sanitizado.
 
 Required changes before public release:
+Mudanças obrigatórias antes da publicação:
 
 - replace absolute local paths with relative artifact descriptions;
+- substituir caminhos locais absolutos por descrições relativas de artefatos;
 - add a non-affiliation disclaimer;
+- adicionar declaração pública de não afiliação;
 - keep OpenAI/Codex references factual and secondary;
+- manter referências a OpenAI/Codex factuais e secundárias;
 - avoid OpenAI logos, marks, or model names in the project title;
+- evitar logos, marcas ou nomes de modelos da OpenAI no título do projeto;
 - keep "cyber intelligence" framed as defensive evidence organization, not national-security or surveillance work;
+- manter "cyber intelligence" enquadrado como organização de evidência defensiva, não como segurança nacional ou vigilância;
 - include a clear "no offensive capability" statement;
-- include the final scan summary without exposing private machine paths.
+- incluir declaração clara de ausência de capacidade ofensiva;
+- include the final scan summary without exposing private machine paths;
+- incluir o resumo final do scan sem expor caminhos privados da máquina.
 
 ### Option C: Static Deploy Preview
+### Opção C: preview de deploy estático
 
 Use after GitHub sanitation.
+Usar depois da sanitização do GitHub.
 
 Acceptable targets:
+Alvos aceitáveis:
 
 - GitHub Pages;
 - Netlify;
 - Cloudflare Pages;
 - local downloadable ZIP only.
+- ZIP local baixável apenas.
 
 Static deploy must not add:
+O deploy estático não deve adicionar:
 
 - backend;
 - login;
 - analytics/telemetry;
+- analytics/telemetria;
 - API key;
+- chave de API;
 - remote ingestion;
+- ingestão remota;
 - automated scanning;
-- hidden background jobs.
+- varredura automatizada;
+- hidden background jobs;
+- tarefas ocultas em segundo plano.
 
 ## Public Disclaimer
+## Aviso público
 
 Use this exact disclaimer in the public README before deploy:
+Use este aviso exatamente no README público antes de qualquer deploy:
 
 ```text
 FCC Security is an independent local-first defensive security prototype by Renan Raad. It is not affiliated with, endorsed by, or sponsored by OpenAI. References to Codex or Codex Security describe tools/workflows used during local development and review. The project does not perform external scanning, exploitation, credential collection, malware activity, telemetry, or production monitoring.
+FCC Security é um protótipo independente de segurança defensiva local-first de Renan Raad. Não é afiliado, endossado ou patrocinado pela OpenAI. Referências a Codex ou Codex Security descrevem ferramentas e fluxos usados durante desenvolvimento e revisão locais. O projeto não realiza varredura externa, exploração, coleta de credenciais, atividade de malware, telemetria ou monitoramento de produção.
 ```
 
 ## Evidence Bundle
+## Pacote de evidências
 
 Current local evidence:
+Evidência local atual:
 
 ```text
-C:\tmp\codex-security-scans\FCCSecurity\no-head_20260616T102807-0300\report.md
-C:\tmp\codex-security-scans\FCCSecurity\no-head_20260616T102807-0300\report.html
-C:\tmp\fccsecurity-frontier-cyber-intelligence.zip
-C:\tmp\fccsecurity-frontier-cyber-intelligence.zip.sha256
-C:\tmp\fccsecurity-final-desktop.png
+local-evidence/report.md
+local-evidence/report.html
+local-evidence/fccsecurity-frontier-cyber-intelligence.zip
+local-evidence/fccsecurity-frontier-cyber-intelligence.zip.sha256
+local-evidence/fccsecurity-final-desktop.png
 ```
 
 SHA-256 receipt:
+Recibo SHA-256:
 
 ```text
-C:\tmp\fccsecurity-frontier-cyber-intelligence.zip.sha256
+local-evidence/fccsecurity-frontier-cyber-intelligence.zip.sha256
 ```
 
 ## Release Checklist
 
 - [x] Sanitize absolute local paths from public docs.
-- [ ] Add public disclaimer to README.
-- [ ] Keep scan result factual: "zero reportable findings survived" instead of "secure".
-- [ ] Keep OpenAI references secondary and factual.
-- [ ] Remove or rewrite any phrase that implies OpenAI approval before approval exists.
+- [x] Add public disclaimer to README.
+- [x] Keep scan result factual: "zero reportable findings survived" instead of "secure".
+- [x] Keep OpenAI references secondary and factual.
+- [x] Remove or rewrite any phrase that implies OpenAI approval before approval exists.
 - [x] Create private GitHub repository for controlled review.
 - [ ] Keep private GitHub repository private until the release gate is closed.
 - [ ] Deploy static preview only after review/sanitation.
-- [ ] Re-run `node --check app.js`.
-- [ ] Re-run runtime sink grep.
+- [x] Re-run `node --check app.js`.
+- [x] Re-run runtime sink grep.
 - [ ] Regenerate ZIP and SHA-256 after public copy is sanitized.
