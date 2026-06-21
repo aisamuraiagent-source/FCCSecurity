@@ -33,10 +33,10 @@ Project summary:
 Review completed locally:
 
 - Codex-assisted implementation
-- Codex Security repository-wide review
+- historical Codex Security repository-wide review artifacts
 - 11/11 in-scope files reviewed
 - 1 stale documentation status issue found, patched, validated, and suppressed
-- 0 reportable findings survived into the final report
+- the historical final report did not carry surviving reportable findings
 - JavaScript syntax check passed
 - unsafe runtime DOM/dynamic execution sink search returned no matches
 - Chrome headless render validation completed

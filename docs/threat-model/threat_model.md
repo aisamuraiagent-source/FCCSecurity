@@ -9,7 +9,7 @@ The repository supports Codex-assisted defensive workflows and repeatable Codex 
 Primary assets:
 
 - credibility of public security evidence and portfolio wording;
-- integrity of local validation and scan receipts;
+- integrity of local validation, evidence manifests, and dated scan receipts;
 - operator notes stored in browser localStorage;
 - threat model and validation docs used to guide future review;
 - static runtime code that renders defensive intelligence data.
@@ -21,7 +21,7 @@ Trust boundaries:
 - Browser UI boundary: local JavaScript renders static seed data and operator notes into the DOM.
 - Local storage boundary: notes persist in the operator browser and must not be treated as a secret vault.
 - Documentation boundary: public or shareable Markdown can create reputational risk if it overclaims validation, OpenAI affiliation, DayBreak status, or Codex Security usage.
-- Scan workflow boundary: future Codex Security artifacts must distinguish discovery, validation, attack-path analysis, and final report evidence.
+- Scan workflow boundary: Codex Security artifacts must distinguish historical receipts, current validation, discovery, validation, attack-path analysis, and final report evidence.
 - Deployment boundary: static files may be hosted later, but no external deploy is part of the current repository state.
 
 Attacker-controlled inputs in the current prototype are limited to local operator notes and any future imported signal text. Developer-controlled inputs include seed data in `app.js`, docs, and static assets. Operator-controlled inputs include UI filter choices, selected signal state, notes, and exported snapshots.
@@ -48,7 +48,8 @@ Existing mitigations:
 - deployable runtime has no package manager, dependency install, or build chain;
 - optional local PDF/profile tooling is outside the deployable runtime and may require Python libraries when used;
 - rendering code uses DOM creation and `textContent` instead of string HTML injection;
-- docs explicitly state the completed Codex Security repo-wide scan result and local report paths;
+- docs separate historical Codex Security scan receipts from current validation evidence;
+- exported snapshots declare session-only state and point to the current evidence manifest;
 - repository rules forbid external scanning, malware, credential theft, and unsupported public claims.
 
 Relevant attacker stories:
@@ -56,6 +57,7 @@ Relevant attacker stories:
 - A future imported signal contains HTML or script and attempts DOM injection.
 - A public README or evidence file implies validation that was not performed.
 - Operator notes accidentally store sensitive information and a local user exports the snapshot.
+- A browser-local review button is mistaken for durable approval or release proof.
 - A later deploy configuration exposes files that were intended to stay local.
 
 Out-of-scope stories for the current state:
@@ -74,7 +76,7 @@ Critical:
 High:
 
 - Imported signal content reaches unsafe DOM sinks such as `innerHTML`, `outerHTML`, `insertAdjacentHTML`, `eval`, or `new Function`.
-- Documentation falsely claims official affiliation, privileged access, or completed validation that did not occur.
+- Documentation falsely claims official affiliation, privileged access, release approval, or completed validation that did not occur.
 
 Medium:
 

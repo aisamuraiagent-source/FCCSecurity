@@ -1,15 +1,15 @@
 const signals = [
   {
     id: "SIG-001",
-    title: "Public claim drift in security evidence",
-    summary: "Documentation was reconciled against local validation and Codex Security receipts.",
+    title: "Evidence integrity alignment",
+    summary: "Live docs and dashboard wording must distinguish historical scan receipts from current local validation.",
     severity: "medium",
     status: "Closed",
-    source: "docs/evidence",
+    source: "README, VERSION, validation docs",
     owner: "Codex",
     category: "closed",
-    evidence: "README, VERSION, validation docs, and scan report now agree on completed local validation.",
-    action: "Keep future public wording tied to fresh validation receipts before publication."
+    evidence: "Current validation is tied to scripts/validate-local.js and docs/evidence/evidence_manifest.json; historical scan artifacts remain dated receipts, not fresh release-gate proof.",
+    action: "Keep public wording tied to the latest manifest before publication."
   },
   {
     id: "SIG-002",
@@ -20,34 +20,41 @@ const signals = [
     source: "app.js",
     owner: "FCC Security",
     category: "closed",
-    evidence: "Codex Security scan and sink grep found no runtime unsafe DOM or dynamic execution sinks.",
+    evidence: "Local validation checks runtime files for unsafe DOM, dynamic execution, timer-string, and browser network sinks.",
     action: "Keep data rendering on textContent/createElement and re-run sink checks."
   },
   {
     id: "SIG-003",
-    title: "Codex Security repository scan completed",
-    summary: "Repo-wide Codex Security scan covered runtime, docs, deployment evidence, and threat model surfaces.",
+    title: "Historical Codex Security scan receipt",
+    summary: "Repo-wide Codex Security artifacts are retained as dated evidence and are not treated as a fresh current scan.",
     severity: "low",
-    status: "Closed",
-    source: "Codex Security skill",
+    status: "Deferred",
+    source: "docs/security-scans/FCCSecurity",
     owner: "Codex",
-    category: "closed",
-    evidence: "Final reports written to C:\\tmp\\codex-security-scans\\FCCSecurity\\no-head_20260616T102807-0300\\report.md and report.html.",
-    action: "Use report.md/report.html as release-gate evidence before external deployment."
+    category: "deferred",
+    evidence: "Historical reports remain in docs/security-scans/FCCSecurity/no-head_20260618T085508-0300; current release decisions require fresh local validation.",
+    action: "Do not present historical scan output as current audit-ready release evidence without a new manifest."
   },
   {
     id: "SIG-004",
-    title: "Local-only intelligence state",
-    summary: "Operator notes and selected signal state stay in the browser through localStorage.",
+    title: "Session-only review state",
+    summary: "Operator notes and selected signal state stay local; review button changes are session-only UI state.",
     severity: "low",
     status: "Closed",
     source: "browser localStorage",
     owner: "FCC Security",
     category: "closed",
-    evidence: "No backend or network path exists in the current prototype.",
-    action: "Keep local state bounded; avoid storing secrets or personal identifiers."
+    evidence: "Exported JSON declares schemaVersion, stateMode, manifest path, note policy, and session transitions.",
+    action: "Avoid treating exports as an audit ledger until durable history and approval identity exist."
   }
 ];
+
+const APP_VERSION = "0.1.2-evidence-integrity";
+const SNAPSHOT_SCHEMA_VERSION = 2;
+const STATE_MODE = "session-only";
+const MAX_NOTE_LENGTH = 4000;
+const EVIDENCE_MANIFEST_PATH = "docs/evidence/evidence_manifest.json";
+const NOTE_POLICY = "Local notes are browser-local operator context, not a secret vault or durable audit ledger.";
 
 const threatSurfaces = [
   {
@@ -71,21 +78,44 @@ const threatSurfaces = [
 const ledgerRows = [
   ["Static UI runtime", "not_applicable", "No backend, no auth, no external API"],
   ["DOM rendering", "suppressed", "No unsafe runtime sink found in reviewed files"],
-  ["Public claims", "suppressed", "One stale status claim patched and suppressed before final report"],
-  ["Local storage", "suppressed", "No secrets intended; warning documented"]
+  ["Public claims", "controlled", "Historical scan wording separated from current validation evidence"],
+  ["Local storage", "controlled", "Notes are bounded and exported with session-only policy metadata"]
 ];
 
 const timeline = [
   ["2026-06-16 09:54", "UI concept generated for operational dashboard direction."],
   ["2026-06-16 10:00", "Repository scaffold created as static local-first prototype."],
   ["2026-06-16 10:05", "Threat model persisted for future Codex Security workflow."],
-  ["2026-06-16 10:45", "Repo-wide Codex Security scan completed with zero surviving reportable findings."]
+  ["2026-06-18 08:55", "Historical Codex Security scan artifacts preserved as dated local evidence."],
+  ["2026-06-21", "Evidence integrity patch added local validator, manifest, and session-only export metadata."]
 ];
 
 const state = {
   filter: "all",
-  selectedId: localStorage.getItem("fcc:selectedSignal") || signals[0].id
+  selectedId: safeGetStorage("fcc:selectedSignal") || signals[0].id,
+  transitions: []
 };
+
+function safeGetStorage(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch (error) {
+    return null;
+  }
+}
+
+function safeSetStorage(key, value) {
+  try {
+    localStorage.setItem(key, value);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+function boundedNotes(value) {
+  return value.slice(0, MAX_NOTE_LENGTH);
+}
 
 const elements = {
   riskScore: document.querySelector("#riskScore"),
@@ -215,7 +245,7 @@ function renderSignals() {
 
     card.addEventListener("click", () => {
       state.selectedId = signal.id;
-      localStorage.setItem("fcc:selectedSignal", state.selectedId);
+      safeSetStorage("fcc:selectedSignal", state.selectedId);
       renderAll();
     });
 
@@ -225,7 +255,7 @@ function renderSignals() {
 
 function renderDetail() {
   const signal = selectedSignal();
-  const savedNotes = localStorage.getItem(`fcc:notes:${signal.id}`) || "";
+  const savedNotes = safeGetStorage(`fcc:notes:${signal.id}`) || "";
 
   elements.detailTitle.textContent = signal.title;
   elements.detailSeverity.textContent = signal.severity;
@@ -234,7 +264,7 @@ function renderDetail() {
   elements.detailSource.textContent = signal.source;
   elements.detailStatus.textContent = signal.status;
   elements.detailOwner.textContent = signal.owner;
-  elements.operatorNotes.value = savedNotes;
+  elements.operatorNotes.value = boundedNotes(savedNotes);
 }
 
 function renderLedger() {
@@ -284,10 +314,22 @@ function setFilter(filter) {
 
 function exportSnapshot() {
   const signal = selectedSignal();
+  const notes = boundedNotes(elements.operatorNotes.value);
   const snapshot = {
+    schemaVersion: SNAPSHOT_SCHEMA_VERSION,
+    appVersion: APP_VERSION,
     generatedAt: new Date().toISOString(),
+    stateMode: STATE_MODE,
+    stateScope: "Browser-local session snapshot. Button-driven review changes are not durable audit approvals.",
+    sourceManifest: EVIDENCE_MANIFEST_PATH,
+    exportPolicy: {
+      notePolicy: NOTE_POLICY,
+      maxNoteLength: MAX_NOTE_LENGTH,
+      notesTruncated: elements.operatorNotes.value.length > MAX_NOTE_LENGTH
+    },
     selectedSignal: signal,
-    notes: elements.operatorNotes.value,
+    notes,
+    sessionTransitions: state.transitions,
     metrics: {
       open: elements.openSignals.textContent,
       validated: elements.validatedSignals.textContent,
@@ -315,19 +357,42 @@ document.querySelectorAll(".nav-item").forEach((button) => {
 });
 
 elements.operatorNotes.addEventListener("input", () => {
-  localStorage.setItem(`fcc:notes:${selectedSignal().id}`, elements.operatorNotes.value);
+  const notes = boundedNotes(elements.operatorNotes.value);
+  if (notes !== elements.operatorNotes.value) {
+    elements.operatorNotes.value = notes;
+  }
+  safeSetStorage(`fcc:notes:${selectedSignal().id}`, notes);
 });
 
 elements.markReviewed.addEventListener("click", () => {
   const signal = selectedSignal();
+  const previousStatus = signal.status;
   signal.status = "Closed";
+  state.transitions.push({
+    at: new Date().toISOString(),
+    signalId: signal.id,
+    action: "mark-reviewed-session-only",
+    previousStatus,
+    nextStatus: signal.status
+  });
   renderAll();
 });
 
 elements.escalateSignal.addEventListener("click", () => {
   const signal = selectedSignal();
+  const previousStatus = signal.status;
+  const previousSeverity = signal.severity;
   signal.status = "Needs validation";
   signal.severity = signal.severity === "low" ? "medium" : signal.severity;
+  state.transitions.push({
+    at: new Date().toISOString(),
+    signalId: signal.id,
+    action: "flag-session-only",
+    previousStatus,
+    nextStatus: signal.status,
+    previousSeverity,
+    nextSeverity: signal.severity
+  });
   renderAll();
 });
 

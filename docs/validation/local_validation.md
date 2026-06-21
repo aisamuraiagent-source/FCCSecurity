@@ -28,9 +28,9 @@ Get-FileHash local-evidence/fccsecurity-frontier-cyber-intelligence.zip -Algorit
 - Package SHA-256 is recorded outside the ZIP at `local-evidence/fccsecurity-frontier-cyber-intelligence.zip.sha256` to avoid a self-referential package hash.
 - Browser/IAB navigation tool was not exposed by `tool_search`; Node REPL Playwright fallback failed with `CreateProcessAsUserW failed: 5`; `npx playwright --version` failed due npm cache permission (`EPERM`). Chrome headless was used as the practical browser fallback.
 
-## Codex Security
+## Historical Codex Security Receipt
 
-Full repository-wide Codex Security scan was completed on 2026-06-16 after explicit subagent authorization.
+Repository-wide Codex Security artifacts were generated on 2026-06-16 after explicit subagent authorization. Treat this as a historical local receipt, not as a fresh current release gate.
 
 Final reports:
 
@@ -39,11 +39,11 @@ local-evidence/report.md
 local-evidence/report.html
 ```
 
-Result:
+Historical result recorded at that time:
 
 - 11/11 deep-review rows received completion receipts.
 - 1 documentation status candidate was discovered, patched, validated, and suppressed before final report.
-- 0 reportable findings survived into the final report.
+- The final report recorded no surviving reportable findings for that historical run.
 
 
 ## Release/Security Gate Review - 2026-06-20
@@ -104,3 +104,30 @@ Limitations:
 
 - This was a docs-only continuation, not a new full repo-wide Codex Security scan.
 - No merge to `main`, deployment, package installation, CI/CD change, or runtime patch was performed in this step.
+
+## Evidence Integrity Validation Workflow - 2026-06-21
+
+Scope: local evidence-integrity patch. This step aligned public wording, dashboard state semantics, export metadata, local validation, and manifest-backed evidence without network access, package installation, deployment, commit, push, or CI/CD change.
+
+Commands executed:
+
+```powershell
+node --check app.js
+node scripts\validate-local.js
+rg -n "innerHTML|outerHTML|insertAdjacentHTML|document\.write|eval\(|new Function|setTimeout\s*\(|setInterval\s*\(|fetch\(|XMLHttpRequest|WebSocket|EventSource|sendBeacon|javascript:" index.html app.js styles.css -S
+git diff --check
+```
+
+Expected results:
+
+- `node --check app.js` passes.
+- `node scripts\validate-local.js` prints `local validation passed`.
+- Runtime sink/network search had no matches in runtime files; exit 1 was expected for no matches.
+- Live-doc overclaim search had no matches in the targeted live docs, plugin references, and runtime files; exit 1 was expected for no matches.
+- `git diff --check` passed with line-ending warnings only.
+
+Limitations:
+
+- This is not a new full repo-wide Codex Security scan.
+- Historical scan artifacts remain dated evidence and were not rewritten.
+- No authenticated GitHub ruleset, bypass list, external publication state, browser screenshot, regenerated ZIP hash, commit, push, or deployment was verified in this step.

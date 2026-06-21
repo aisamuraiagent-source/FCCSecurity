@@ -1,7 +1,7 @@
 # Safety Test Plan
 
 Date: 2026-06-21
-Mode: docs-only defensive continuation on an `origin/main`-based branch.
+Mode: evidence-integrity defensive patch on an `origin/main`-based branch.
 Workspace: `C:\tmp\FCCSecurity-clean-20260618T202007`
 
 ## Scope
@@ -11,8 +11,10 @@ This plan covers the current local-first FCC Security workspace only.
 In scope:
 
 - static runtime: `index.html`, `styles.css`, `app.js`;
-- existing validation evidence: `docs/validation/local_validation.md`;
-- docs-only governance artifacts added in this branch;
+- reproducible validation: `scripts/validate-local.js`;
+- evidence manifest: `docs/evidence/evidence_manifest.json`;
+- current validation evidence: `docs/validation/local_validation.md`;
+- governance artifacts added in this branch;
 - local plugin bundle under `plugins/fccsecurity-doc-activation`;
 - local-only review of current files.
 
@@ -22,7 +24,7 @@ Out of scope:
 - deploy;
 - package installation;
 - CI/CD changes;
-- runtime code changes in this docs-only continuation;
+- external GitHub reads/writes or authenticated ruleset inspection;
 - external scanning, exploitation, credential collection, or third-party targets.
 
 ## Defensive Passes
@@ -53,16 +55,14 @@ Checks:
 
 ### Pass C - Verifier
 
-Goal: prove current controls are still true after docs-only changes.
+Goal: prove current controls are still true after evidence-integrity changes.
 
 Commands:
 
 ```powershell
 node --check app.js
+node scripts\validate-local.js
 rg -n "innerHTML|outerHTML|insertAdjacentHTML|document\.write|eval\(|new Function|setTimeout\s*\(|setInterval\s*\(|fetch\(|XMLHttpRequest|WebSocket|EventSource|sendBeacon|javascript:" index.html app.js styles.css -S
-$sentinelPatterns = @(('<local-user-' + 'path>'),('<unsupported-affiliation-' + 'claim>'),('<zero-risk-' + 'claim>'),('<stale-scan-' + 'path>'))
-$docPaths = @('README.md','VERSION.md','SAFETY_TEST_PLAN.md','SECURITY_FINDINGS.md','REMEDIATION_BACKLOG.md','PATCH_VALIDATION_REPORT.md') + (Get-ChildItem -LiteralPath 'docs','plugins' -Recurse -File | ForEach-Object { $_.FullName })
-Select-String -Path $docPaths -Pattern $sentinelPatterns -SimpleMatch
 git diff --check
 ```
 
@@ -72,10 +72,12 @@ git diff --check
 | --- | --- | --- | --- | --- |
 | Workspace selection | Work happens in deprecated OneDrive checkout | Current path plus `git status` | Active path is `C:\tmp\FCCSecurity-clean-20260618T202007` | Block work if wrong path |
 | Runtime syntax | Static JS has syntax regression | `node --check app.js` | Exit 0 | Block release if failing |
+| Evidence manifest | Current validation cannot be tied to a commit/worktree state | `node scripts\validate-local.js` | `local validation passed` | Block publication if failing |
 | Unsafe runtime sinks | Future UI renders untrusted data unsafely | sink grep against runtime files | No matches | HIGH if introduced |
 | Network/client APIs | Local-only claim becomes false | sink/network grep | No matches | HIGH if introduced |
 | Docs sanitization | Local usernames or unsupported claims leak | docs check using local sanitized policy terms | No output | MEDIUM/HIGH depending claim |
 | Local notes | Operator stores sensitive text | threat model and UI policy | Warn, bound, and treat export as local evidence | MEDIUM residual |
+| Session-only state | UI actions are mistaken for durable approvals | UI/export validation | Export declares `stateMode: session-only` and session transitions only | MEDIUM if absent |
 | Future integrations | Backend/agent/deploy changes threat model | docs gate | Require new review before change | HIGH gate |
 
 ## Evidence Handling

@@ -112,7 +112,7 @@ local-evidence/fccsecurity-frontier-cyber-intelligence.zip.sha256
 
 - [ ] Sanitize absolute local paths from public docs.
 - [x] Add public disclaimer to README.
-- [x] Keep scan result factual: "zero reportable findings survived" instead of "secure".
+- [x] Keep scan result factual, dated, and historical instead of using broad "secure" wording.
 - [x] Keep OpenAI references secondary and factual.
 - [x] Remove or rewrite any phrase that implies OpenAI approval before approval exists.
 - [x] Create private GitHub repository for controlled review.

@@ -33,12 +33,12 @@ The project is defensive and local-first:
 - local browser state only through `localStorage`;
 - no external deployment has been performed yet.
 
-Security review already completed:
+Historical local security review artifacts:
 
-- Codex Security repository-wide scan completed on 2026-06-16;
+- Codex Security repository-wide review artifacts were generated on 2026-06-16;
 - 11/11 in-scope files received completion receipts;
 - one stale documentation status candidate was discovered, patched, validated, and suppressed;
-- zero reportable findings survived into the final report;
+- the historical final report did not carry surviving reportable findings;
 - JavaScript syntax check passed;
 - runtime sink search found no unsafe DOM or dynamic execution sinks;
 - Chrome headless render validation completed;

@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-06-21T00:00:00-03:00",
+  "workspace": "C:\\tmp\\FCCSecurity-clean-20260618T202007",
+  "baseCommit": "4b0000e6c31e22e0b0ea8cbf876a1415087d5332",
+  "gitRecord": "After this patch is committed, use git log -1 and the pushed branch as the authoritative evidence commit record.",
+  "scope": {
+    "runtime": [
+      "index.html",
+      "styles.css",
+      "app.js"
+    ],
+    "validation": [
+      "scripts/validate-local.js",
+      "docs/validation/local_validation.md",
+      "docs/evidence/evidence_manifest.json"
+    ],
+    "governance": [
+      "README.md",
+      "VERSION.md",
+      "SAFETY_TEST_PLAN.md",
+      "SECURITY_FINDINGS.md",
+      "REMEDIATION_BACKLOG.md",
+      "PATCH_VALIDATION_REPORT.md",
+      "docs/threat-model/threat_model.md"
+    ]
+  },
+  "commands": [
+    {
+      "command": "node --check app.js",
+      "purpose": "JavaScript syntax validation"
+    },
+    {
+      "command": "node scripts\\validate-local.js",
+      "purpose": "Repository-local evidence integrity validation"
+    },
+    {
+      "command": "rg -n \"innerHTML|outerHTML|insertAdjacentHTML|document\\.write|eval\\(|new Function|setTimeout\\s*\\(|setInterval\\s*\\(|fetch\\(|XMLHttpRequest|WebSocket|EventSource|sendBeacon|javascript:\" index.html app.js styles.css -S",
+      "purpose": "Runtime unsafe sink and network client check"
+    },
+    {
+      "command": "git diff --check",
+      "purpose": "Whitespace and patch hygiene check"
+    }
+  ],
+  "claimPolicy": {
+    "historicalScanArtifacts": "Dated local receipts only; not a fresh current release gate.",
+    "currentValidation": "Must be tied to this manifest and local command output.",
+    "uiReviewActions": "Session-only state changes, not durable approvals.",
+    "publicAssurance": "No certification, official endorsement, zero-risk claim, or external security assurance."
+  },
+  "limitations": [
+    "No external publication state was checked.",
+    "No GitHub authenticated ruleset or bypass state was checked.",
+    "No CI/CD workflow was added or modified in this patch.",
+    "No commit was created in this patch; sourceCommit identifies the local base commit."
+  ]
+}

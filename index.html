@@ -50,6 +50,7 @@
           <div>
             <p class="section-label">Frontier Cyber Intelligence</p>
             <h1>Risk, evidence, validation, action.</h1>
+            <p class="topbar-note">Current evidence is local and manifest-backed. Review buttons are session-only.</p>
           </div>
           <div class="topbar-actions">
             <button class="icon-button" type="button" id="exportSnapshot" title="Export snapshot">
@@ -143,15 +144,16 @@
               </div>
             </dl>
             <label class="notes-label" for="operatorNotes">Operator notes</label>
-            <textarea id="operatorNotes" rows="5" placeholder="Local notes stay in this browser."></textarea>
+            <textarea id="operatorNotes" rows="5" maxlength="4000" placeholder="Local notes stay in this browser. Do not enter secrets."></textarea>
+            <p class="notes-policy">Local notes are not a secret vault and exports are not durable audit approvals.</p>
             <div class="action-row">
               <button class="primary-action" type="button" id="markReviewed">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 15.2 7.4-7.4 1.4 1.4L10 18 5.2 13.2l1.4-1.4L10 15.2Z"/></svg>
-                <span>Mark reviewed</span>
+                <span>Mark reviewed in session</span>
               </button>
               <button class="secondary-action" type="button" id="escalateSignal">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h2v10h-2V3Zm1 18a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg>
-                <span>Flag</span>
+                <span>Flag in session</span>
               </button>
             </div>
           </article>
@@ -159,11 +161,11 @@
           <article class="panel ledger-panel">
             <div class="panel-header compact">
               <div>
-                <p class="section-label">Validation Ledger</p>
+                <p class="section-label">Validation Snapshot</p>
                 <h2>Coverage state</h2>
               </div>
             </div>
-            <div class="ledger-table" role="table" aria-label="Validation ledger">
+            <div class="ledger-table" role="table" aria-label="Validation snapshot">
               <div class="ledger-row ledger-head" role="row">
                 <span role="columnheader">Surface</span>
                 <span role="columnheader">Disposition</span>
