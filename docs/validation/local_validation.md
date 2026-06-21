@@ -77,3 +77,30 @@ Next steps:
 - Keep public deployment blocked until the private-review/release gate is intentionally closed.
 - If a public package is produced, regenerate the ZIP and SHA-256 after final sanitation and re-run browser smoke validation.
 - If future ingestion or backend/API surfaces are added, update the threat model before implementation and repeat DOM/network validation.
+
+## Docs-Only Validation Workflow - 2026-06-21
+
+Scope: branch-local docs-only continuation based on `origin/main`. This step added the four defensive review artifacts and the local `plugins/fccsecurity-doc-activation` bundle without changing `index.html`, `styles.css`, or `app.js`.
+
+Commands executed:
+
+```powershell
+node --check app.js
+rg -n "innerHTML|outerHTML|insertAdjacentHTML|document\.write|eval\(|new Function|setTimeout\s*\(|setInterval\s*\(|fetch\(|XMLHttpRequest|WebSocket|EventSource|sendBeacon|javascript:" index.html app.js styles.css -S
+$sentinelPatterns = @(('<local-user-' + 'path>'),('<unsupported-affiliation-' + 'claim>'),('<zero-risk-' + 'claim>'),('<stale-scan-' + 'path>'))
+$docPaths = @('README.md','VERSION.md','SAFETY_TEST_PLAN.md','SECURITY_FINDINGS.md','REMEDIATION_BACKLOG.md','PATCH_VALIDATION_REPORT.md') + (Get-ChildItem -LiteralPath 'docs','plugins' -Recurse -File | ForEach-Object { $_.FullName })
+Select-String -Path $docPaths -Pattern $sentinelPatterns -SimpleMatch
+git diff --check
+```
+
+Results:
+
+- `node --check app.js` passed.
+- Runtime sink search over `index.html`, `app.js`, and `styles.css` had no matches.
+- Documentation/plugin sentinel search had no output.
+- `git diff --check` passed.
+
+Limitations:
+
+- This was a docs-only continuation, not a new full repo-wide Codex Security scan.
+- No merge to `main`, deployment, package installation, CI/CD change, or runtime patch was performed in this step.

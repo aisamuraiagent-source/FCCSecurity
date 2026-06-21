@@ -26,6 +26,16 @@ http://127.0.0.1:4173/
 - `docs/threat-model/threat_model.md`: threat model base para Codex Security.
 - `docs/evidence/implementation_evidence.md`: inventario da primeira entrega.
 - `docs/validation/local_validation.md`: evidencia de validacao local.
+- `SAFETY_TEST_PLAN.md`: plano docs-only para revisao defensiva e verificacao local.
+- `SECURITY_FINDINGS.md`: findings defensivos classificados e riscos residuais.
+- `REMEDIATION_BACKLOG.md`: backlog de controles e gates para evolucao segura.
+- `PATCH_VALIDATION_REPORT.md`: validacao da continuacao docs-only sem patch de runtime.
+
+## Plugin local de ativacao
+
+O bundle local em `plugins/fccsecurity-doc-activation` empacota as skills docs-only para reutilizar estes artefatos defensivos dentro do workspace.
+
+Este bundle local nao instala marketplace global, nao altera runtime, nao executa rede, nao faz deploy e nao substitui revisao humana antes de publicacao.
 
 ## Codex Security
 
