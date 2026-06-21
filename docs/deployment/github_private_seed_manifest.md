@@ -7,19 +7,19 @@ Purpose: describe the sanitized local seed prepared for the private GitHub repos
 ## Seed Location
 
 ```text
-C:\tmp\fccsecurity-private-github-seed
+local-evidence/fccsecurity-private-github-seed
 ```
 
 ZIP:
 
 ```text
-C:\tmp\fccsecurity-private-github-seed.zip
+local-evidence/fccsecurity-private-github-seed.zip
 ```
 
 SHA-256 receipt:
 
 ```text
-C:\tmp\fccsecurity-private-github-seed.zip.sha256
+local-evidence/fccsecurity-private-github-seed.zip.sha256
 ```
 
 ## Intended Use

@@ -34,8 +34,8 @@ O scan repo-wide Codex Security foi executado em 2026-06-16 com cobertura sobre 
 Relatorios locais:
 
 ```text
-C:\tmp\codex-security-scans\FCCSecurity\no-head_20260616T102807-0300\report.md
-C:\tmp\codex-security-scans\FCCSecurity\no-head_20260616T102807-0300\report.html
+local-evidence/report.md
+local-evidence/report.html
 ```
 
 ## Pacote local
@@ -43,10 +43,15 @@ C:\tmp\codex-security-scans\FCCSecurity\no-head_20260616T102807-0300\report.html
 O pacote estatico de entrega deve ser gerado em:
 
 ```text
-C:\tmp\fccsecurity-frontier-cyber-intelligence.zip
+local-evidence/fccsecurity-frontier-cyber-intelligence.zip
 ```
 
 Manifesto: `docs/deployment/deploy_manifest.md`.
+
+## Aviso público
+
+FCC Security is an independent local-first defensive security prototype by Renan Raad. It is not affiliated with, endorsed by, or sponsored by OpenAI. References to Codex or Codex Security describe tools/workflows used during local development and review. The project does not perform external scanning, exploitation, credential collection, malware activity, telemetry, or production monitoring.
+FCC Security é um protótipo independente de segurança defensiva local-first de Renan Raad. Não é afiliado, endossado ou patrocinado pela OpenAI. Referências a Codex ou Codex Security descrevem ferramentas e fluxos usados durante desenvolvimento e revisão locais. O projeto não realiza varredura externa, exploração, coleta de credenciais, atividade de malware, telemetria ou monitoramento de produção.
 
 ## Limites
 

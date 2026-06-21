@@ -41,13 +41,13 @@ Wait for staff/community review before creating a GitHub repository or public de
 Use the sanitized review packet:
 
 ```text
-C:\tmp\fccsecurity-openai-review-packet-20260616.zip
+local-evidence/fccsecurity-openai-review-packet-20260616.zip
 ```
 
 SHA-256 receipt:
 
 ```text
-C:\tmp\fccsecurity-openai-review-packet-20260616.zip.sha256
+local-evidence/fccsecurity-openai-review-packet-20260616.zip.sha256
 ```
 
 Do not upload:
