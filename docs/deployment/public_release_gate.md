@@ -110,7 +110,7 @@ local-evidence/fccsecurity-frontier-cyber-intelligence.zip.sha256
 
 ## Release Checklist
 
-- [x] Sanitize absolute local paths from public docs.
+- [ ] Sanitize absolute local paths from public docs.
 - [x] Add public disclaimer to README.
 - [x] Keep scan result factual: "zero reportable findings survived" instead of "secure".
 - [x] Keep OpenAI references secondary and factual.

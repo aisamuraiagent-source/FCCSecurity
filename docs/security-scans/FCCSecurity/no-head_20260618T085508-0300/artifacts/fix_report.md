@@ -38,7 +38,7 @@ Commands run:
 ```powershell
 node --check app.js
 git diff --check
-rg -n "static HTML/CSS/JavaScript only|no dependency install or build chain|dependency install|C:\\Users\\[^\\]+|file:///C:/Users|\\.codex|optional local PDF|package manager" docs\openai docs\threat-model docs\evidence docs\validation docs\security-scans\FCCSecurity\threat_model.md README.md VERSION.md
+rg -n "static HTML/CSS/JavaScript only|no dependency install or build chain|dependency install|<windows_user_profile_path>|file:///<windows_user_profile_root>|\\.codex|optional local PDF|package manager" docs\openai docs\threat-model docs\evidence docs\validation docs\security-scans\FCCSecurity\threat_model.md README.md VERSION.md
 rg -n "innerHTML|outerHTML|insertAdjacentHTML|eval\(|new Function|fetch\(|XMLHttpRequest|WebSocket|EventSource|sendBeacon" index.html app.js styles.css
 ```
 
@@ -46,7 +46,7 @@ Results:
 
 - `node --check app.js`: passed.
 - `git diff --check`: passed.
-- Targeted documentation grep: remaining `dependency install` and `package manager` matches are scoped to the deployable runtime or optional local tooling; no unredacted Windows user-profile paths, `file:///C:/Users`, or `.codex` paths remain in the live public docs checked.
+- Targeted documentation grep: remaining `dependency install` and `package manager` matches are scoped to the deployable runtime or optional local tooling; no unredacted Windows user-profile paths, `file:///<windows_user_profile_root>`, or `.codex` paths remain in the live public docs checked.
 - Runtime sink grep: no matches in `index.html`, `app.js`, or `styles.css`.
 
 ## Residual Risk

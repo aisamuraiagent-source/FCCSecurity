@@ -47,17 +47,17 @@ Security review already completed:
 Local evidence artifacts:
 
 ```text
-C:\tmp\codex-security-scans\FCCSecurity\no-head_20260616T102807-0300\report.md
-C:\tmp\codex-security-scans\FCCSecurity\no-head_20260616T102807-0300\report.html
-C:\tmp\fccsecurity-frontier-cyber-intelligence.zip
-C:\tmp\fccsecurity-frontier-cyber-intelligence.zip.sha256
-C:\tmp\fccsecurity-final-desktop.png
+local-evidence/report.md
+local-evidence/report.html
+local-evidence/fccsecurity-frontier-cyber-intelligence.zip
+local-evidence/fccsecurity-frontier-cyber-intelligence.zip.sha256
+local-evidence/fccsecurity-final-desktop.png
 ```
 
 Package SHA-256 receipt:
 
 ```text
-C:\tmp\fccsecurity-frontier-cyber-intelligence.zip.sha256
+local-evidence/fccsecurity-frontier-cyber-intelligence.zip.sha256
 ```
 
 The main question:
@@ -86,7 +86,7 @@ Recommended attachments:
 - final `report.html`;
 - ZIP package;
 - `.sha256` receipt, kept outside the ZIP to avoid a self-referential package hash;
-- screenshot `C:\tmp\fccsecurity-final-desktop.png`;
+- screenshot `local-evidence/fccsecurity-final-desktop.png`;
 - `README.md`;
 - `docs/threat-model/threat_model.md`;
 - `docs/validation/local_validation.md`;

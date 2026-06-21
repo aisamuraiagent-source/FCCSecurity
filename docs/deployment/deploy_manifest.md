@@ -5,13 +5,13 @@ Date: 2026-06-16
 Package target:
 
 ```text
-C:\tmp\fccsecurity-frontier-cyber-intelligence.zip
+local-evidence/fccsecurity-frontier-cyber-intelligence.zip
 ```
 
 Package hash receipt:
 
 ```text
-C:\tmp\fccsecurity-frontier-cyber-intelligence.zip.sha256
+local-evidence/fccsecurity-frontier-cyber-intelligence.zip.sha256
 ```
 
 ## Included Runtime Files
@@ -40,7 +40,7 @@ C:\tmp\fccsecurity-frontier-cyber-intelligence.zip.sha256
 ## Excluded
 
 - `.git`
-- local browser screenshots under `C:\tmp`
+- local browser screenshots under `local-evidence/`
 - generated image source under `<local_codex_image_cache>\generated_images`
 - any external credentials, keys, caches, or machine-local browser profile data
 
@@ -53,8 +53,8 @@ The SHA-256 hash is recorded outside the ZIP to avoid a self-referential package
 Codex Security repo-wide scan was completed before external deployment. Final reports are stored outside the ZIP:
 
 ```text
-C:\tmp\codex-security-scans\FCCSecurity\no-head_20260616T102807-0300\report.md
-C:\tmp\codex-security-scans\FCCSecurity\no-head_20260616T102807-0300\report.html
+local-evidence/report.md
+local-evidence/report.html
 ```
 
 No external deployment was performed in this step.

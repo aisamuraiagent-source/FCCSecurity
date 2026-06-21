@@ -13,7 +13,7 @@ Date: 2026-06-18
 
 ## Original Git Directory Blocker
 
-The original repository Git directory could not create lock files, so local `git add` and `git commit` were blocked in the source checkout. ACL inspection showed explicit `Deny` entries on `<repo_root>/.git`; approved attempts to remove or reset those ACL entries returned access-denied errors, including from an elevated process. The commit-ready workspace was therefore produced in the approved clean copy at `C:\tmp\FCCSecurity-clean`.
+The original repository Git directory could not create lock files, so local `git add` and `git commit` were blocked in the source checkout. ACL inspection showed explicit `Deny` entries on `<repo_root>/.git`; approved attempts to remove or reset those ACL entries returned access-denied errors, including from an elevated process. The commit-ready workspace was therefore produced in the approved clean copy at `local-workspace/FCCSecurity-clean`.
 
 ## Title
 
@@ -37,8 +37,8 @@ Checks run before commit:
 ```powershell
 node --check app.js
 git diff --check
-rg -n "static HTML/CSS/JavaScript only|no dependency install or build chain|dependency install|C:\\Users\\[^\\]+|file:///C:/Users|\\.codex|optional local PDF|package manager" docs\openai docs\threat-model docs\evidence docs\validation docs\security-scans\FCCSecurity\threat_model.md README.md VERSION.md docs\security-scans\FCCSecurity\no-head_20260618T085508-0300\artifacts\fix_report.md
-rg -n "C:\\Users\\[^\\]+|file:///C:/Users/[^/]+|\\.codex\\generated_images" docs\openai docs\threat-model docs\evidence docs\validation docs\security-scans\FCCSecurity\threat_model.md docs\security-scans\FCCSecurity\no-head_20260618T085508-0300\artifacts\fix_report.md
+rg -n "static HTML/CSS/JavaScript only|no dependency install or build chain|dependency install|<windows_user_profile_path>|file:///<windows_user_profile_root>|\\.codex|optional local PDF|package manager" docs\openai docs\threat-model docs\evidence docs\validation docs\security-scans\FCCSecurity\threat_model.md README.md VERSION.md docs\security-scans\FCCSecurity\no-head_20260618T085508-0300\artifacts\fix_report.md
+rg -n "<windows_user_profile_path>|file:///<windows_user_profile_path>|\\.codex\\generated_images" docs\openai docs\threat-model docs\evidence docs\validation docs\security-scans\FCCSecurity\threat_model.md docs\security-scans\FCCSecurity\no-head_20260618T085508-0300\artifacts\fix_report.md
 rg -n "innerHTML|outerHTML|insertAdjacentHTML|eval\(|new Function|fetch\(|XMLHttpRequest|WebSocket|EventSource|sendBeacon" index.html app.js styles.css
 ```
 
