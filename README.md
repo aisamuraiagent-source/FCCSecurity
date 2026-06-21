@@ -51,6 +51,27 @@ O script `scripts\validate-local.js` usa apenas Node.js nativo e verifica contra
 - `docs/evidence/bootstrap_evidence.md`: evidencia de criacao do projeto limpo e backup local.
 - `docs/evidence/runtime_hardening_20260618.md`: evidencia do hardening de `localStorage`, limite de notas e exportacao.
 - `docs/validation/local_validation.md`: validacao local atual.
+- `SAFETY_TEST_PLAN.md`: plano de revisao defensiva e verificacao local.
+- `SECURITY_FINDINGS.md`: findings classificados e riscos residuais.
+- `REMEDIATION_BACKLOG.md`: backlog defensivo e gates futuros.
+- `PATCH_VALIDATION_REPORT.md`: relatorio da continuacao docs-only.
+
+## Plugin local de ativacao
+
+Plugin local criado em:
+
+```text
+plugins/fccsecurity-doc-activation
+```
+
+Skills de ativacao:
+
+- `fccsecurity-safety-test-plan` para `SAFETY_TEST_PLAN.md`;
+- `fccsecurity-security-findings` para `SECURITY_FINDINGS.md`;
+- `fccsecurity-remediation-backlog` para `REMEDIATION_BACKLOG.md`;
+- `fccsecurity-patch-validation-report` para `PATCH_VALIDATION_REPORT.md`.
+
+Este plugin nao foi instalado globalmente, nao cria marketplace e nao executa rede.
 
 ## Pacote local
 
@@ -75,7 +96,3 @@ O pacote exclui `.git` e preserva apenas arquivos do projeto limpo.
 - Nao existe ingestao automatica de logs, alertas reais ou dados de terceiros.
 - Nao inserir segredos, tokens, credenciais, dados pessoais ou incidentes privados nas notas locais.
 - Nao houve deploy externo nesta etapa.
-
-
-
-

@@ -14,7 +14,9 @@ node --check app.js
 node scripts\validate-local.js
 rg -n "innerHTML|outerHTML|insertAdjacentHTML|document\.write|eval\(|new Function|setTimeout\s*\(|setInterval\s*\(|fetch\(|XMLHttpRequest|WebSocket|EventSource|sendBeacon|javascript:" index.html app.js styles.css -S
 Select-String -Path app.js -Pattern 'localStorage\.getItem\("fcc:|localStorage\.setItem\("fcc:|localStorage\.setItem\(`fcc:'
-rg -n "<stale-scan-path>|<stale-deploy-path>|<local-user-path>|<unsupported-affiliation-claim>" README.md VERSION.md SECURITY_SCOPE.md docs/threat-model docs/evidence docs/validation -S
+$sentinelPatterns = @(('<stale-scan-' + 'path>'),('<stale-deploy-' + 'path>'),('<local-user-' + 'path>'),('<unsupported-affiliation-' + 'claim>'))
+$docPaths = @('README.md','VERSION.md','SECURITY_SCOPE.md') + (Get-ChildItem -LiteralPath 'docs' -Recurse -File | ForEach-Object { $_.FullName })
+Select-String -Path $docPaths -Pattern $sentinelPatterns -SimpleMatch
 ```
 
 ## Functional Remediation

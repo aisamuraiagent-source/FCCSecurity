@@ -1,5 +1,23 @@
 # Version
 
+## 0.2.3 - 2026-06-20
+
+Plugin local de ativacao criado para os artefatos defensivos:
+
+- `plugins/fccsecurity-doc-activation/.codex-plugin/plugin.json`;
+- skills locais para `SAFETY_TEST_PLAN.md`, `SECURITY_FINDINGS.md`, `REMEDIATION_BACKLOG.md` e `PATCH_VALIDATION_REPORT.md`;
+- plugin validado com `validate_plugin.py`;
+- quatro skills validadas com `quick_validate.py`;
+- sem marketplace, install global, rede, package install, deploy, commit, push ou GitHub write.
+## 0.2.2 - 2026-06-20
+
+Continuacao docs-only de revisao defensiva:
+
+- adicionados `SAFETY_TEST_PLAN.md`, `SECURITY_FINDINGS.md`, `REMEDIATION_BACKLOG.md` e `PATCH_VALIDATION_REPORT.md`;
+- runtime preservado sem alteracao;
+- validacao local repetida com `node --check app.js`, `node scripts\validate-local.js`, busca de sinks runtime, busca de overclaim/path privado e `git diff --check`;
+- sem rede, package install, deploy, commit, push, hook ou GitHub write.
+
 ## 0.2.1 - 2026-06-19
 
 Workspace autoritativo marcado de forma explicita:
@@ -37,8 +55,3 @@ Primeira entrega local-first de Frontier Cyber Intelligence:
 - threat model inicial;
 - evidencia de implementacao;
 - validacao local executada e documentada.
-
-
-
-
-
