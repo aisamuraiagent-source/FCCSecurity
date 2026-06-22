@@ -2,7 +2,7 @@
 
 Date: 2026-06-21
 Mode: evidence-integrity defensive patch on an `origin/main`-based branch.
-Workspace: `C:\tmp\FCCSecurity-clean-20260618T202007`
+Workspace: `<local_workspace>`
 
 ## Summary
 

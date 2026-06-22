@@ -17,7 +17,7 @@ Read this file completely before acting:
 
 ## Activation Contract
 
-1. Confirm the active workspace is `C:\tmp\FCCSecurity-clean-20260618T202007`.
+1. Confirm the active workspace is the approved local FCCSecurity working copy before editing.
 2. Preserve docs-only/local-only scope unless the user explicitly authorizes a broader action.
 3. Use the plan's three passes:
    - Defensive Reviewer

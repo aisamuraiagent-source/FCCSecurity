@@ -17,7 +17,7 @@ Read this file completely before acting:
 
 ## Activation Contract
 
-1. Confirm the active workspace is `C:\tmp\FCCSecurity-clean-20260618T202007`.
+1. Confirm the active workspace is the approved local FCCSecurity working copy before editing.
 2. Treat listed findings as defensive controls and residual risks, not public certification.
 3. Preserve severity, evidence, recommended correction, validation, residual risk, and status fields.
 4. Do not invent vulnerabilities when evidence supports only a process or documentation risk.

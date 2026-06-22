@@ -2,7 +2,7 @@
 
 Date: 2026-06-21
 Mode: evidence-integrity defensive patch on an `origin/main`-based branch.
-Workspace: `C:\tmp\FCCSecurity-clean-20260618T202007`
+Workspace: `<local_workspace>`
 
 ## Scope
 
@@ -70,7 +70,7 @@ git diff --check
 
 | Area | Risk | Current check | Expected result | Gate |
 | --- | --- | --- | --- | --- |
-| Workspace selection | Work happens in deprecated OneDrive checkout | Current path plus `git status` | Active path is `C:\tmp\FCCSecurity-clean-20260618T202007` | Block work if wrong path |
+| Workspace selection | Work happens in deprecated sync-folder checkout | Current path plus `git status` | Active path is `<local_workspace>` | Block work if wrong path |
 | Runtime syntax | Static JS has syntax regression | `node --check app.js` | Exit 0 | Block release if failing |
 | Evidence manifest | Current validation cannot be tied to a commit/worktree state | `node scripts\validate-local.js` | `local validation passed` | Block publication if failing |
 | Unsafe runtime sinks | Future UI renders untrusted data unsafely | sink grep against runtime files | No matches | HIGH if introduced |

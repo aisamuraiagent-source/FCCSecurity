@@ -17,7 +17,7 @@ Read this file completely before acting:
 
 ## Activation Contract
 
-1. Confirm the active workspace is `C:\tmp\FCCSecurity-clean-20260618T202007`.
+1. Confirm the active workspace is the approved local FCCSecurity working copy before editing.
 2. Preserve the distinction between docs-only changes and runtime changes.
 3. Re-run or propose the report's validation commands depending on current approval.
 4. Treat no-match `rg` exit code 1 as expected only when the output is empty and the command is a negative search.

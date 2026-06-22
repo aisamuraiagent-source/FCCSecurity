@@ -34,7 +34,7 @@ except Exception:  # pragma: no cover - validation reports this explicitly
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT_ROOT = Path(os.environ.get("PROFILE_PDF_OUT_ROOT", r"C:\tmp\fccsecurity-profile-pdfs"))
+OUT_ROOT = Path(os.environ.get("PROFILE_PDF_OUT_ROOT", str(ROOT / "local-evidence" / "fccsecurity-profile-pdfs")))
 OUT_DIR = OUT_ROOT / "output" / "pdf"
 TMP_DIR = OUT_ROOT / "tmp" / "pdfs"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -46,11 +46,14 @@ VALIDATION_TXT = OUT_DIR / "validacao-pdfs.txt"
 
 
 def register_fonts() -> tuple[str, str]:
-    candidates = [
-        Path(os.environ.get("WINDIR", r"C:\Windows")) / "Fonts" / "arial.ttf",
-        Path(os.environ.get("WINDIR", r"C:\Windows")) / "Fonts" / "arialbd.ttf",
-    ]
-    if candidates[0].exists() and candidates[1].exists():
+    windir = os.environ.get("WINDIR")
+    candidates = []
+    if windir:
+        candidates = [
+            Path(windir) / "Fonts" / "arial.ttf",
+            Path(windir) / "Fonts" / "arialbd.ttf",
+        ]
+    if len(candidates) == 2 and candidates[0].exists() and candidates[1].exists():
         pdfmetrics.registerFont(TTFont("Arial", str(candidates[0])))
         pdfmetrics.registerFont(TTFont("Arial-Bold", str(candidates[1])))
         return "Arial", "Arial-Bold"
@@ -394,7 +397,7 @@ def make_cv():
             CVS["cv_role"],
         ),
         Paragraph(
-            "Funilandia, MG, Brasil | Remoto | +55 31 98414-4405 | mestrerenanraad@gmail.com<br/>"
+            "Funilandia, MG, Brasil | Remoto | contato sob demanda<br/>"
             "LinkedIn: www.linkedin.com/in/renan-raad-308540387 | GitHub: github.com/aisamuraiagent-source",
             CVS["cv_contact"],
         ),
@@ -447,7 +450,7 @@ def make_cv():
             "AI Threat Modeling & Dependency Risk Review Lab",
             "2026 | Threat model / dependency risk / patch validation",
             [
-                "Lab publico sanitizado para threat modeling, revisao assistida por Codex, dependency risk review, scan inicial, patch aprovado por humano e validacao pos-patch.",
+                "Lab publico sanitizado para threat modeling, revisao assistida por Codex, dependency risk review, scan inicial, patch revisado com controle humano e validacao pos-patch.",
                 "Documentacao ajustada com postura conservadora: evidencia limitada ao escopo analisado, sem declarar ausencia global de vulnerabilidades.",
             ],
         ),

@@ -61,8 +61,54 @@ const staleLiveClaims = [
   /valida[cç][aã]o conclu[ií]da/i
 ];
 
+const publicationSkipDirectories = new Set([".git", "local-evidence", "node_modules"]);
+const publicationExtensions = new Set([
+  ".css",
+  ".csv",
+  ".html",
+  ".js",
+  ".json",
+  ".jsonl",
+  ".md",
+  ".py",
+  ".txt",
+  ".yaml",
+  ".yml"
+]);
+
+const localFileScheme = "file" + ":///";
+const absoluteLocalPathPatterns = [
+  new RegExp("(^|[^A-Za-z])[A-Z]:[\\\\/]", "i"),
+  new RegExp(`${localFileScheme}[A-Z]:/`, "i")
+];
+
+const allowedPublicEmails = new Set(["partnercomms@openai.com"]);
+const directEmailPattern = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
+const directPhonePattern = /\+\d{1,3}\s?\d{1,3}\s?\d{4,}/g;
+
 function readRelative(file) {
   return fs.readFileSync(path.join(root, file), "utf8");
+}
+
+function listPublicationFiles(directory = root) {
+  const files = [];
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    if (entry.isDirectory() && publicationSkipDirectories.has(entry.name)) {
+      continue;
+    }
+    const fullPath = path.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...listPublicationFiles(fullPath));
+      continue;
+    }
+    if (!entry.isFile()) {
+      continue;
+    }
+    if (publicationExtensions.has(path.extname(entry.name).toLowerCase())) {
+      files.push(path.relative(root, fullPath).replace(/\\/g, "/"));
+    }
+  }
+  return files;
 }
 
 function assert(condition, message) {
@@ -113,6 +159,20 @@ function checkLiveDocClaims() {
   }
 }
 
+function checkPublicSurfaceSanitization() {
+  for (const file of listPublicationFiles()) {
+    const content = readRelative(file);
+    for (const pattern of absoluteLocalPathPatterns) {
+      assert(!pattern.test(content), `unsanitized absolute local path ${pattern} found in ${file}`);
+    }
+    for (const match of content.matchAll(directEmailPattern)) {
+      assert(allowedPublicEmails.has(match[0].toLowerCase()), `direct email address found in ${file}`);
+    }
+    assert(!directPhonePattern.test(content), `direct phone number found in ${file}`);
+    directPhonePattern.lastIndex = 0;
+  }
+}
+
 function checkManifest() {
   const manifest = JSON.parse(readRelative("docs/evidence/evidence_manifest.json"));
   assert(manifest.schemaVersion === 1, "manifest schemaVersion must be 1");
@@ -127,6 +187,7 @@ function main() {
   checkRuntimeSinks();
   checkEvidenceIntegrityContracts();
   checkLiveDocClaims();
+  checkPublicSurfaceSanitization();
   checkManifest();
   console.log("local validation passed");
 }

@@ -212,4 +212,4 @@ Evidence that would lower severity: wording changed to clearly scope no-dependen
 
 - Patch the wording in `docs/openai/openai_deploy_review_request.md`, `docs/openai/openai_developer_forum_post.md`, and `docs/threat-model/threat_model.md` to scope no-dependency/static-only claims to the deployable runtime.
 - Optionally sanitize absolute local paths in `docs/evidence/implementation_evidence.md` and `docs/validation/local_validation.md` as a hygiene backlog item before public release.
-- After remediation, re-run targeted grep for `<user_profile>`, `file:///C:/Users`, `.codex`, `static HTML`, and `dependency install`.
+- After remediation, re-run targeted grep for `<user_profile>`, `file:///<user_profile>`, `.codex`, `static HTML`, and `dependency install`.

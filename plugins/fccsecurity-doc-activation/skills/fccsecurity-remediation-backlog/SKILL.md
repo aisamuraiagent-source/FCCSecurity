@@ -17,7 +17,7 @@ Read this file completely before acting:
 
 ## Activation Contract
 
-1. Confirm the active workspace is `C:\tmp\FCCSecurity-clean-20260618T202007`.
+1. Confirm the active workspace is the approved local FCCSecurity working copy before editing.
 2. Keep the current decision: no runtime patch is recommended unless new evidence or approval changes scope.
 3. Prioritize gates for local notes, imported signal safety, public wording, future integrations, and active workspace selection.
 4. Convert backlog items into concrete next actions only when they remain inside the user's approved scope.

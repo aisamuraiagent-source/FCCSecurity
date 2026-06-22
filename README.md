@@ -1,6 +1,6 @@
 # FCC Security
 
-Frontier Cyber Intelligence e um painel local-first para organizar sinais defensivos, threat model, validacao e evidencia operacional com Codex.
+FCC Security e um painel local-first defensivo para organizar sinais, threat model, validacao e evidencia operacional com Codex.
 
 Estado atual: prototipo estatico executavel com validacao local reproduzivel. Nao ha backend, banco, login, API externa, dependencia de build ou telemetria.
 

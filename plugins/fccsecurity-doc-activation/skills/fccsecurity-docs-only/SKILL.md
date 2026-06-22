@@ -20,7 +20,7 @@ Read these files completely before acting:
 
 ## Activation Contract
 
-1. Confirm the working target is `C:\tmp\FCCSecurity-clean-20260618T202007` when touching the FCCSecurity repo.
+1. Confirm the working target is the approved local FCCSecurity working copy before touching the FCCSecurity repo.
 2. Keep scope docs-only and local-only unless the user explicitly authorizes runtime changes, network, install, deploy, GitHub, commit, or push.
 3. Use the four references as the operating bundle:
    - `SAFETY_TEST_PLAN.md` defines review passes and validation checks.
