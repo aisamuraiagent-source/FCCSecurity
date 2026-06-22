@@ -121,3 +121,9 @@ local-evidence/fccsecurity-frontier-cyber-intelligence.zip.sha256
 - [x] Re-run `node --check app.js`.
 - [x] Re-run runtime sink grep.
 - [ ] Regenerate ZIP and SHA-256 after public copy is sanitized.
+
+## Branch Protection Status
+
+Branch protection policy documented as `main-protection-documentation-only`.
+Ruleset enforcement is disabled because GitHub does not enforce repository rulesets on this private repository under the current account plan/structure.
+No technical branch protection is claimed. Current control is manual branch/PR discipline plus evidence logging until GitHub Team/Organization enforcement is available.
