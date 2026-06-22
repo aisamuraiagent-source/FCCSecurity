@@ -1,0 +1,18 @@
+{
+  "name": "fccsecurity-doc-activation",
+  "version": "0.1.0+codex.20260620193852",
+  "description": "Local activation plugin for the complete FCCSecurity docs-only defensive workflow and its audit artifacts.",
+  "author": {
+    "name": "Renan Raad"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "FCCSecurity Doc Activation",
+    "shortDescription": "Activate FCCSecurity docs-only defensive workflow from Codex.",
+    "longDescription": "Provides local Codex skills that operationalize the FCCSecurity docs-only workflow, including the safety test plan, security findings, remediation backlog, and patch validation report from bundled references.",
+    "developerName": "Renan Raad",
+    "category": "Security",
+    "capabilities": [],
+    "defaultPrompt": "Continue FCCSecurity docs-only using the installed activation plugin."
+  }
+}

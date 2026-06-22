@@ -41,6 +41,6 @@ The PNG could not be copied into the workspace through PowerShell or Python in t
 
 - Dynamic UI data is rendered with DOM creation and `textContent`.
 - Operator notes stay local in browser localStorage.
-- Codex Security repo-wide scan completed on 2026-06-16 with 11/11 reviewed rows.
-- One stale documentation status candidate was patched, validated, and suppressed before the final report.
-- No reportable findings survived into the final Codex Security report.
+- Historical Codex Security scan artifacts are preserved as dated local evidence.
+- Current release or publication decisions require fresh local validation through `scripts/validate-local.js` and `docs/evidence/evidence_manifest.json`.
+- The dashboard export is a browser-local session snapshot, not a durable audit ledger.

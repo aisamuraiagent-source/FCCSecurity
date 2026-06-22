@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 from pypdf import PdfReader
@@ -28,7 +29,7 @@ from reportlab.platypus import (
 ROOT = Path(__file__).resolve().parents[1]
 HISTORICAL_SCAN_ID = "no-head_20260618T085508-0300"
 HISTORICAL_SCAN_DIR = ROOT / f"docs/security-scans/FCCSecurity/{HISTORICAL_SCAN_ID}"
-OUT_DIR = Path(r"C:\tmp\fccsecurity-professional-report")
+OUT_DIR = Path(os.environ.get("FCCSECURITY_REPORT_OUT_DIR", str(ROOT / "local-evidence" / "fccsecurity-professional-report")))
 PREVIEW_DIR = OUT_DIR / "preview"
 PDF_PATH = OUT_DIR / "fccsecurity-codex-security-professional-report.pdf"
 LINKEDIN_TXT = OUT_DIR / "linkedin-post.txt"
@@ -47,12 +48,14 @@ PALE_BLUE = colors.HexColor("#EAF1FF")
 
 
 def register_fonts() -> tuple[str, str]:
-    regular = r"C:\Windows\Fonts\arial.ttf"
-    bold = r"C:\Windows\Fonts\arialbd.ttf"
-    if Path(regular).exists() and Path(bold).exists():
-        pdfmetrics.registerFont(TTFont("PremiumSans", regular))
-        pdfmetrics.registerFont(TTFont("PremiumSans-Bold", bold))
-        return "PremiumSans", "PremiumSans-Bold"
+    windir = os.environ.get("WINDIR")
+    if windir:
+        regular = Path(windir) / "Fonts" / "arial.ttf"
+        bold = Path(windir) / "Fonts" / "arialbd.ttf"
+        if regular.exists() and bold.exists():
+            pdfmetrics.registerFont(TTFont("PremiumSans", str(regular)))
+            pdfmetrics.registerFont(TTFont("PremiumSans-Bold", str(bold)))
+            return "PremiumSans", "PremiumSans-Bold"
     return "Helvetica", "Helvetica-Bold"
 
 

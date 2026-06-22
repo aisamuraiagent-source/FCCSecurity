@@ -1,8 +1,8 @@
 # FCC Security
 
-Frontier Cyber Intelligence e um painel local-first para organizar sinais defensivos, threat model, validacao e evidencia operacional com Codex.
+FCC Security e um painel local-first defensivo para organizar sinais, threat model, validacao e evidencia operacional com Codex.
 
-Estado atual: prototipo estatico executavel. Nao ha backend, banco, login, API externa, dependencia de build ou telemetria.
+Estado atual: prototipo estatico executavel com validacao local reproduzivel. Nao ha backend, banco, login, API externa, dependencia de build ou telemetria.
 
 ## Como executar
 
@@ -22,20 +22,40 @@ http://127.0.0.1:4173/
 
 - `index.html`: estrutura da interface.
 - `styles.css`: sistema visual responsivo.
-- `app.js`: dados locais, estado, filtros, selecao de sinais, ledger e exportacao.
+- `app.js`: dados locais, estado, filtros, selecao de sinais, snapshot de validacao e exportacao.
+- `scripts/validate-local.js`: validacao local reproduzivel para runtime, docs e manifesto de evidencia.
 - `docs/threat-model/threat_model.md`: threat model base para Codex Security.
 - `docs/evidence/implementation_evidence.md`: inventario da primeira entrega.
+- `docs/evidence/evidence_manifest.json`: manifesto local com commit base, comandos de validacao e limitacoes.
 - `docs/validation/local_validation.md`: evidencia de validacao local.
+- `SAFETY_TEST_PLAN.md`: plano docs-only para revisao defensiva e verificacao local.
+- `SECURITY_FINDINGS.md`: findings defensivos classificados e riscos residuais.
+- `REMEDIATION_BACKLOG.md`: backlog de controles e gates para evolucao segura.
+- `PATCH_VALIDATION_REPORT.md`: validacao da continuacao docs-only sem patch de runtime.
+
+## Plugin local de ativacao
+
+O bundle local em `plugins/fccsecurity-doc-activation` empacota as skills docs-only para reutilizar estes artefatos defensivos dentro do workspace.
+
+Este bundle local nao instala marketplace global, nao altera runtime, nao executa rede, nao faz deploy e nao substitui revisao humana antes de publicacao.
 
 ## Codex Security
 
-O scan repo-wide Codex Security foi executado em 2026-06-16 com cobertura sobre runtime, documentacao, threat model e manifestos de deploy. Resultado final: zero findings reportaveis sobreviventes; uma divergencia documental de status foi corrigida e suprimida antes do relatorio final.
+Os artefatos Codex Security preservados neste repositorio sao recibos historicos e datados de revisoes locais. Eles nao substituem uma validacao atual nem devem ser apresentados como release gate fresco sem novo manifesto ligado ao estado corrente do commit/worktree.
 
-Relatorios locais:
+Relatorios historicos locais:
 
 ```text
-local-evidence/report.md
-local-evidence/report.html
+docs/security-scans/FCCSecurity/no-head_20260618T085508-0300/report.md
+docs/security-scans/FCCSecurity/no-head_20260618T085508-0300/report.html
+```
+
+Validacao atual recomendada:
+
+```powershell
+node --check app.js
+node scripts\validate-local.js
+git diff --check
 ```
 
 ## Pacote local
@@ -58,3 +78,4 @@ FCC Security é um protótipo independente de segurança defensiva local-first d
 - Os dados do painel sao exemplos locais para estruturar fluxo defensivo.
 - Nao existe ingestao automatica de logs ou alertas reais.
 - Nao houve deploy externo nesta etapa.
+- Botoes de revisao da interface alteram apenas o estado da sessao; exports JSON nao sao ledger auditavel sem historico duravel, identidade de aprovador e commit validado.

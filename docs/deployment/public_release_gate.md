@@ -1,86 +1,48 @@
-Do not publish the current local package unchanged. It contains local artifact paths and internal evidence references that are useful for audit but should be sanitized before public release.
+# Public Release Gate
 
-Current gate status:
+Date: 2026-06-21
+Status: repository-publication gate passed for the sanitized PR state after merge. Static deploy remains out of scope until a fresh public ZIP and SHA-256 are generated.
 
-```text
-OpenAI Developer Community submission created.
-Account temporarily on hold by automated moderation pending staff review.
-No OpenAI approval, endorsement, or release authorization has been received.
-Private GitHub repository created on 2026-06-18 for controlled review only.
-Public GitHub, GitHub Pages, Netlify, and any public static deployment remain blocked until review.
-```
+No OpenAI approval, endorsement, partnership, certification, or release authorization has been received. Public wording must remain independent, factual, defensive, and limited to evidence observed in this repository.
 
-## Release Options
+## Publication Decision
 
-### Option A: Private GitHub Repository First
+GitHub repository visibility may be changed to public only after the sanitized PR is merged into `main`.
 
-Best first step.
+Reason:
 
-- Preserve evidence and history privately.
-- Share the repo link with reviewers.
-- Avoid public indexing while wording is reviewed.
-- Attach `report.md`, `report.html`, ZIP hash, and screenshot as release artifacts or issue attachments.
+- `main` is the public default branch;
+- the PR contains the evidence-integrity and publication-sanitization updates;
+- publishing before merge would expose the older default-branch state;
+- no technical branch-protection enforcement is claimed.
 
-### Option B: Public GitHub Repository
-### Opção B: repositório público no GitHub
+Static deploy, GitHub Pages, Netlify, package release, external scan, CI/CD, and status checks remain out of scope for this gate.
 
-Use only after the public wording is sanitized.
-Usar somente depois que o texto público estiver sanitizado.
+## Public Scope
 
-Required changes before public release:
-Mudanças obrigatórias antes da publicação:
+Allowed for public GitHub visibility:
 
-- replace absolute local paths with relative artifact descriptions;
-- substituir caminhos locais absolutos por descrições relativas de artefatos;
-- add a non-affiliation disclaimer;
-- adicionar declaração pública de não afiliação;
-- keep OpenAI/Codex references factual and secondary;
-- manter referências a OpenAI/Codex factuais e secundárias;
-- avoid OpenAI logos, marks, or model names in the project title;
-- evitar logos, marcas ou nomes de modelos da OpenAI no título do projeto;
-- keep "cyber intelligence" framed as defensive evidence organization, not national-security or surveillance work;
-- manter "cyber intelligence" enquadrado como organização de evidência defensiva, não como segurança nacional ou vigilância;
-- include a clear "no offensive capability" statement;
-- incluir declaração clara de ausência de capacidade ofensiva;
-- include the final scan summary without exposing private machine paths;
-- incluir o resumo final do scan sem expor caminhos privados da máquina.
+- static local-first runtime: `index.html`, `styles.css`, `app.js`;
+- defensive documentation and threat model;
+- dated historical scan receipts under `docs/security-scans/**`;
+- local validation script and evidence manifest;
+- local plugin bundle used as documentation/workflow reference.
 
-### Option C: Static Deploy Preview
-### Opção C: preview de deploy estático
-
-Use after GitHub sanitation.
-Usar depois da sanitização do GitHub.
-
-Acceptable targets:
-Alvos aceitáveis:
-
-- GitHub Pages;
-- Netlify;
-- Cloudflare Pages;
-- local downloadable ZIP only.
-- ZIP local baixável apenas.
-
-Static deploy must not add:
-O deploy estático não deve adicionar:
+Not included:
 
 - backend;
 - login;
-- analytics/telemetry;
-- analytics/telemetria;
+- analytics or telemetry;
 - API key;
-- chave de API;
 - remote ingestion;
-- ingestão remota;
 - automated scanning;
-- varredura automatizada;
 - hidden background jobs;
-- tarefas ocultas em segundo plano.
+- production monitoring;
+- external deployment.
 
 ## Public Disclaimer
-## Aviso público
 
-Use this exact disclaimer in the public README before deploy:
-Use este aviso exatamente no README público antes de qualquer deploy:
+Use this exact disclaimer in public surfaces:
 
 ```text
 FCC Security is an independent local-first defensive security prototype by Renan Raad. It is not affiliated with, endorsed by, or sponsored by OpenAI. References to Codex or Codex Security describe tools/workflows used during local development and review. The project does not perform external scanning, exploitation, credential collection, malware activity, telemetry, or production monitoring.
@@ -88,36 +50,49 @@ FCC Security é um protótipo independente de segurança defensiva local-first d
 ```
 
 ## Evidence Bundle
-## Pacote de evidências
 
-Current local evidence:
-Evidência local atual:
+Historical local scan receipts are preserved as dated artifacts, not as a fresh release gate:
 
 ```text
-local-evidence/report.md
-local-evidence/report.html
-local-evidence/fccsecurity-frontier-cyber-intelligence.zip
-local-evidence/fccsecurity-frontier-cyber-intelligence.zip.sha256
-local-evidence/fccsecurity-final-desktop.png
+docs/security-scans/FCCSecurity/no-head_20260618T085508-0300/report.md
+docs/security-scans/FCCSecurity/no-head_20260618T085508-0300/report.html
 ```
 
-SHA-256 receipt:
-Recibo SHA-256:
+Current validation for publication must use:
 
-```text
-local-evidence/fccsecurity-frontier-cyber-intelligence.zip.sha256
+```powershell
+node --check app.js
+node scripts\validate-local.js
+git diff --check
 ```
 
 ## Release Checklist
 
-- [ ] Sanitize absolute local paths from public docs.
-- [x] Add public disclaimer to README.
-- [x] Keep scan result factual: "zero reportable findings survived" instead of "secure".
-- [x] Keep OpenAI references secondary and factual.
-- [x] Remove or rewrite any phrase that implies OpenAI approval before approval exists.
-- [x] Create private GitHub repository for controlled review.
-- [ ] Keep private GitHub repository private until the release gate is closed.
-- [ ] Deploy static preview only after review/sanitation.
+- [x] Sanitize actual absolute local paths from public docs and helper scripts.
+- [x] Add public non-affiliation disclaimer to README.
+- [x] Keep scan result factual, dated, and historical instead of using broad secure/zero-risk wording.
+- [x] Keep OpenAI/Codex references secondary and factual.
+- [x] Remove or rewrite any phrase that implies OpenAI approval, certification, partnership, or endorsement.
+- [x] Review `docs/security-scans/**` as historical defensive artifacts.
+- [x] Decide that PR #3 should enter `main` before public visibility because `main` is the public default branch.
 - [x] Re-run `node --check app.js`.
-- [x] Re-run runtime sink grep.
-- [ ] Regenerate ZIP and SHA-256 after public copy is sanitized.
+- [x] Re-run local evidence/publication validator.
+- [x] Re-run `git diff --check`.
+- [ ] Regenerate ZIP and SHA-256 only if a separate public static package/deploy is requested.
+- [ ] Enable technical branch protection/ruleset enforcement only after a separate GitHub governance step.
+
+## Name And Description Decision
+
+Repository name `FCCSecurity` is acceptable for public GitHub visibility because it does not imply official affiliation, certification, or OpenAI approval.
+
+Recommended public description:
+
+```text
+Local-first defensive security prototype for threat modeling, validation, and audit-ready evidence. No external scanning, telemetry, or OpenAI affiliation.
+```
+
+## Branch Protection Status
+
+Branch protection policy is documented as `main-protection-documentation-only`.
+Ruleset enforcement remains disabled until explicitly enabled in GitHub after publication/governance review.
+No technical branch protection is claimed. Current control is manual branch/PR discipline plus evidence logging.
