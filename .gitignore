@@ -1,6 +1,7 @@
 # Local generated outputs
 output/
 tmp/
+local-evidence/
 *.log
 
 # Environment and secrets

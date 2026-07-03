@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { spawnSync } = require("child_process");
 
 const root = path.resolve(__dirname, "..");
 
@@ -61,7 +62,8 @@ const staleLiveClaims = [
   /valida[cç][aã]o conclu[ií]da/i
 ];
 
-const publicationSkipDirectories = new Set([".git", "local-evidence", "node_modules"]);
+const localEvidenceDirectory = "local-evidence";
+const publicationSkipDirectories = new Set([".git", localEvidenceDirectory, "node_modules"]);
 const publicationExtensions = new Set([
   ".css",
   ".csv",
@@ -159,6 +161,45 @@ function checkLiveDocClaims() {
   }
 }
 
+function checkLocalEvidencePolicy() {
+  const gitignoreLines = readRelative(".gitignore")
+    .split(/\r?\n/)
+    .map((line) => line.trim());
+
+  assert(
+    gitignoreLines.includes(`${localEvidenceDirectory}/`),
+    `${localEvidenceDirectory}/ must be ignored before it is skipped by publication sanitization`
+  );
+
+  if (!fs.existsSync(path.join(root, ".git"))) {
+    return;
+  }
+
+  const result = spawnSync("git", ["ls-files", "--", localEvidenceDirectory], {
+    cwd: root,
+    encoding: "utf8"
+  });
+
+  if (result.error) {
+    throw result.error;
+  }
+
+  assert(
+    result.status === 0,
+    `git ls-files ${localEvidenceDirectory} failed: ${(result.stderr || "").trim()}`
+  );
+
+  const trackedFiles = result.stdout
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  assert(
+    trackedFiles.length === 0,
+    `${localEvidenceDirectory}/ files must not be tracked: ${trackedFiles.join(", ")}`
+  );
+}
+
 function checkPublicSurfaceSanitization() {
   for (const file of listPublicationFiles()) {
     const content = readRelative(file);
@@ -187,6 +228,7 @@ function main() {
   checkRuntimeSinks();
   checkEvidenceIntegrityContracts();
   checkLiveDocClaims();
+  checkLocalEvidencePolicy();
   checkPublicSurfaceSanitization();
   checkManifest();
   console.log("local validation passed");
