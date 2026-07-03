@@ -1,6 +1,15 @@
 # Deploy Manifest
 
-Date: 2026-06-16
+Date: 2026-07-03
+Mode: current public repository manifest and historical package boundary
+
+## Current Status
+
+This repository is public and the current default branch state is source-only for the static FCC Security prototype.
+
+No fresh public ZIP, SHA-256 receipt, GitHub Pages deployment, Netlify deployment, package release, CI/CD workflow, external scan, backend, API, telemetry, authentication, or background automation is included in this manifest state.
+
+The package paths below are reserved output targets for a future explicit static-package step. They are not evidence that a fresh public package exists for the current commit.
 
 Package target:
 
@@ -13,6 +22,8 @@ Package hash receipt:
 ```text
 local-evidence/fccsecurity-frontier-cyber-intelligence.zip.sha256
 ```
+
+Before any package or deploy use, regenerate the ZIP from the current commit, write a new SHA-256 receipt outside the ZIP, and re-run the local validation commands listed in `README.md`.
 
 ## Included Runtime Files
 
@@ -46,15 +57,31 @@ local-evidence/fccsecurity-frontier-cyber-intelligence.zip.sha256
 
 ## Deployment Boundary
 
-This package is a static local artifact. It does not perform external hosting, network ingestion, telemetry, authentication, or background automation.
+Any package produced from this manifest must remain a static local artifact. It must not perform external hosting, network ingestion, telemetry, authentication, or background automation.
 
 The SHA-256 hash is recorded outside the ZIP to avoid a self-referential package hash.
 
-Codex Security repo-wide scan was completed before external deployment. Final reports are stored outside the ZIP:
+## Historical Scan Receipts
+
+Historical Codex Security scan receipts are preserved in the repository as dated local review artifacts. They are not a fresh release gate for the current commit and must not be presented as current deployment approval.
+
+Historical local reports:
 
 ```text
-local-evidence/report.md
-local-evidence/report.html
+docs/security-scans/FCCSecurity/no-head_20260618T085508-0300/report.md
+docs/security-scans/FCCSecurity/no-head_20260618T085508-0300/report.html
 ```
 
-No external deployment was performed in this step.
+## Branch Governance Decision
+
+The remote branch `codex/docs-only-validation-workflow` is treated as a historical governance branch with separate/orphaned history, not as a current release source for `main`.
+
+Decision:
+
+- do not merge `codex/docs-only-validation-workflow` wholesale into `main`;
+- use it only as reference material for governance controls that may still be useful;
+- if any files from that branch are needed, reintroduce them through a clean branch based on current `main`;
+- do not cite that branch as current validation, package, deploy, branch-protection, or release evidence;
+- archive or delete the branch only after a separate explicit GitHub governance action.
+
+No external deployment was performed by this manifest refresh.
