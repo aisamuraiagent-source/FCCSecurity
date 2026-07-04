@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
 const { spawnSync } = require("child_process");
 
 const root = path.resolve(__dirname, "..");
@@ -63,6 +64,8 @@ const staleLiveClaims = [
 ];
 
 const localEvidenceDirectory = "local-evidence";
+const evidenceManifestFile = "docs/evidence/evidence_manifest.json";
+const manifestDigestAlgorithm = "sha256";
 const publicationSkipDirectories = new Set([".git", localEvidenceDirectory, "node_modules"]);
 const publicationExtensions = new Set([
   ".css",
@@ -90,6 +93,80 @@ const directPhonePattern = /\+\d{1,3}\s?\d{1,3}\s?\d{4,}/g;
 
 function readRelative(file) {
   return fs.readFileSync(path.join(root, file), "utf8");
+}
+
+function stableJson(value) {
+  if (Array.isArray(value)) {
+    return `[${value.map(stableJson).join(",")}]`;
+  }
+  if (value && typeof value === "object") {
+    return `{${Object.keys(value)
+      .sort()
+      .map((key) => `${JSON.stringify(key)}:${stableJson(value[key])}`)
+      .join(",")}}`;
+  }
+  return JSON.stringify(value);
+}
+
+function normalizeManifestScopePath(file) {
+  const normalized = file.replace(/\\/g, "/");
+  assert(
+    normalized && !path.isAbsolute(normalized) && !normalized.split("/").includes(".."),
+    `manifest scope file must be repository-relative: ${file}`
+  );
+  return normalized;
+}
+
+function manifestForDigest(manifest) {
+  const copy = JSON.parse(JSON.stringify(manifest));
+  delete copy.scopeDigest;
+  return `${stableJson(copy)}\n`;
+}
+
+function listManifestScopeFiles(manifest) {
+  assert(manifest.scope && typeof manifest.scope === "object", "manifest must include scope");
+  const files = new Set([evidenceManifestFile]);
+
+  for (const scopeFiles of Object.values(manifest.scope)) {
+    assert(Array.isArray(scopeFiles), "manifest scope entries must be arrays");
+    for (const file of scopeFiles) {
+      files.add(normalizeManifestScopePath(file));
+    }
+  }
+
+  return [...files].sort();
+}
+
+function calculateManifestScopeDigest(manifest) {
+  const hash = crypto.createHash(manifestDigestAlgorithm);
+  for (const file of listManifestScopeFiles(manifest)) {
+    const content = file === evidenceManifestFile
+      ? manifestForDigest(manifest)
+      : readRelative(file).replace(/\r\n/g, "\n");
+    hash.update(file);
+    hash.update("\0");
+    hash.update(content);
+    hash.update("\0");
+  }
+  return `${manifestDigestAlgorithm}:${hash.digest("hex")}`;
+}
+
+function runGit(args, errorMessage) {
+  const result = spawnSync("git", args, {
+    cwd: root,
+    encoding: "utf8"
+  });
+
+  if (result.error) {
+    throw result.error;
+  }
+
+  assert(
+    result.status === 0,
+    `${errorMessage}: ${(result.stderr || result.stdout || "").trim()}`
+  );
+
+  return result.stdout.trim();
 }
 
 function listPublicationFiles(directory = root) {
@@ -216,9 +293,18 @@ function checkPublicSurfaceSanitization() {
 }
 
 function checkManifest() {
-  const manifest = JSON.parse(readRelative("docs/evidence/evidence_manifest.json"));
+  const manifest = JSON.parse(readRelative(evidenceManifestFile));
   assert(manifest.schemaVersion === 1, "manifest schemaVersion must be 1");
-  assert(typeof manifest.baseCommit === "string" && manifest.baseCommit.length >= 7, "manifest must include baseCommit");
+  assert(/^[0-9a-f]{40}$/i.test(manifest.baseCommit), "manifest baseCommit must be a full Git commit SHA");
+  if (fs.existsSync(path.join(root, ".git"))) {
+    runGit(["cat-file", "-e", `${manifest.baseCommit}^{commit}`], "manifest baseCommit must exist in local Git history");
+    runGit(["merge-base", "--is-ancestor", manifest.baseCommit, "HEAD"], "manifest baseCommit must be an ancestor of HEAD");
+  }
+  const expectedDigest = calculateManifestScopeDigest(manifest);
+  assert(
+    manifest.scopeDigest === expectedDigest,
+    `manifest scopeDigest must match current validation scope: expected ${expectedDigest}`
+  );
   assert(manifest.claimPolicy.uiReviewActions.includes("Session-only"), "manifest must identify session-only review actions");
   assert(manifest.claimPolicy.historicalScanArtifacts.includes("Dated local receipts"), "manifest must separate historical scan artifacts from current validation");
   assert(Array.isArray(manifest.commands) && manifest.commands.length >= 3, "manifest must list validation commands");

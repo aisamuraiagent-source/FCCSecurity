@@ -26,7 +26,7 @@ http://127.0.0.1:4173/
 - `scripts/validate-local.js`: validacao local reproduzivel para runtime, docs e manifesto de evidencia.
 - `docs/threat-model/threat_model.md`: threat model base para Codex Security.
 - `docs/evidence/implementation_evidence.md`: inventario da primeira entrega.
-- `docs/evidence/evidence_manifest.json`: manifesto local com commit base, comandos de validacao e limitacoes.
+- `docs/evidence/evidence_manifest.json`: manifesto local com commit base, digest do escopo, comandos de validacao e limitacoes.
 - `docs/validation/local_validation.md`: evidencia de validacao local.
 - `SAFETY_TEST_PLAN.md`: plano docs-only para revisao defensiva e verificacao local.
 - `SECURITY_FINDINGS.md`: findings defensivos classificados e riscos residuais.
@@ -41,7 +41,7 @@ Este bundle local nao instala marketplace global, nao altera runtime, nao execut
 
 ## Codex Security
 
-Os artefatos Codex Security preservados neste repositorio sao recibos historicos e datados de revisoes locais. Eles nao substituem uma validacao atual nem devem ser apresentados como release gate fresco sem novo manifesto ligado ao estado corrente do commit/worktree.
+Os artefatos Codex Security preservados neste repositorio sao recibos historicos e datados de revisoes locais. Eles nao substituem uma validacao atual nem devem ser apresentados como release gate fresco sem novo manifesto ligado ao digest do escopo validado.
 
 Relatorios historicos locais:
 
