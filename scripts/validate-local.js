@@ -14,6 +14,7 @@ const requiredFiles = [
   "SECURITY_FINDINGS.md",
   "REMEDIATION_BACKLOG.md",
   "PATCH_VALIDATION_REPORT.md",
+  "plugins/fccsecurity-doc-activation/references/PATCH_VALIDATION_REPORT.md",
   "docs/threat-model/threat_model.md",
   "docs/evidence/implementation_evidence.md",
   "docs/evidence/evidence_manifest.json",
@@ -91,7 +92,7 @@ const allowedPublicEmails = new Set(["partnercomms@openai.com"]);
 const directEmailPattern = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
 const directPhonePattern = /\+\d{1,3}\s?\d{1,3}\s?\d{4,}/g;
 const privateRemoteUrlPattern = new RegExp(
-  `${"https://github\\.com/"}${"aisamuraiagent-source/"}${"FCCSecurity\\.git"}`,
+  `${"https://github\\.com/"}${"aisamuraiagent-source/"}${"FCCSecurity"}(?:\\.git)?(?:\\b|[/?#])`,
   "i"
 );
 const privateRemoteMetadataPatterns = [
@@ -112,8 +113,20 @@ const privateRemoteMetadataPatterns = [
     label: "concrete Git branch tracking state"
   },
   {
+    pattern: new RegExp(`\\b${["fd", "52562"].join("")}\\b`, "i"),
+    label: "redacted private branch commit SHA"
+  },
+  {
     pattern: new RegExp(["The", "private", "GitHub", "repository", "now", "exists"].join("\\s+"), "i"),
     label: "private repository existence statement"
+  },
+  {
+    pattern: new RegExp(["private", "GitHub", "repository", "created"].join("\\s+"), "i"),
+    label: "private repository creation statement"
+  },
+  {
+    pattern: new RegExp(["Push", "to", "the", "private", "remote"].join("\\s+"), "i"),
+    label: "private remote push statement"
   },
   {
     pattern: new RegExp(["private", "remote", "audit", "context"].join("[-\\s]+"), "i"),
@@ -162,6 +175,11 @@ function listManifestScopeFiles(manifest) {
     for (const file of scopeFiles) {
       files.add(normalizeManifestScopePath(file));
     }
+  }
+
+  for (const file of requiredFiles) {
+    const normalized = normalizeManifestScopePath(file);
+    assert(files.has(normalized), `manifest scope must include required file: ${normalized}`);
   }
 
   return [...files].sort();
