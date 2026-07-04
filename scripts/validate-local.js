@@ -65,9 +65,10 @@ const staleLiveClaims = [
 ];
 
 const localEvidenceDirectory = "local-evidence";
+const generatedOutputDirectory = "output";
 const evidenceManifestFile = "docs/evidence/evidence_manifest.json";
 const manifestDigestAlgorithm = "sha256";
-const publicationSkipDirectories = new Set([".git", localEvidenceDirectory, "node_modules"]);
+const publicationSkipDirectories = new Set([".git", generatedOutputDirectory, localEvidenceDirectory, "node_modules"]);
 const publicationExtensions = new Set([
   ".css",
   ".csv",
