@@ -2,8 +2,9 @@
   "schemaVersion": 1,
   "generatedAt": "2026-06-21T00:00:00-03:00",
   "workspace": "<local_workspace>",
-  "baseCommit": "4b0000e6c31e22e0b0ea8cbf876a1415087d5332",
-  "gitRecord": "After this patch is committed, use git log -1 and the pushed branch as the authoritative evidence commit record.",
+  "baseCommit": "b4f33f549abad14724d94bc3df0c9fd22fdb2377",
+  "scopeDigest": "sha256:73a0c877718961171fc05c2322701dd01e18b6984acd25ec774f39ddd3258976",
+  "gitRecord": "baseCommit is the reviewed Git base; scopeDigest binds this manifest to the current validation scope, and the pushed PR or merge commit is the authoritative publication record.",
   "scope": {
     "runtime": [
       "index.html",
@@ -45,7 +46,7 @@
   ],
   "claimPolicy": {
     "historicalScanArtifacts": "Dated local receipts only; not a fresh current release gate.",
-    "currentValidation": "Must be tied to this manifest and local command output.",
+    "currentValidation": "Must be tied to this manifest, scopeDigest, and local command output.",
     "uiReviewActions": "Session-only state changes, not durable approvals.",
     "publicAssurance": "No certification, official endorsement, zero-risk claim, or external security assurance."
   },
@@ -53,6 +54,6 @@
     "Public release gate must be checked separately before changing repository visibility.",
     "No GitHub authenticated ruleset or bypass state was checked.",
     "No CI/CD workflow was added or modified in this patch.",
-    "No commit was created in this patch; sourceCommit identifies the local base commit."
+    "baseCommit identifies the reviewed Git base; scopeDigest is the current content binding for the manifest validation scope."
   ]
 }

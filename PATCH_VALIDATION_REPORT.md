@@ -59,5 +59,5 @@ git diff --check
 
 - Operator notes remain human-controlled and can still contain sensitive text if manually entered.
 - Future network, backend, package, GitHub Action, AI agent, connector, or deploy work requires a new review cycle.
-- The manifest records the base commit; after commit, `git log -1` and the pushed branch are the authoritative evidence commit record.
+- The manifest records the reviewed base commit and a scope digest; after commit, `git log -1` and the pushed branch are the authoritative publication record.
 - This report is not a certification, official endorsement, or guarantee of security.
