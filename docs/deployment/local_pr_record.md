@@ -7,9 +7,9 @@ Date: 2026-06-18
 - Remote PR created for this remediation: no.
 - Historical note: this file began as a local pull-request surrogate before the private GitHub remote was configured.
 - Current local branch: `main`.
-- Current remote: `origin` -> `https://github.com/aisamuraiagent-source/FCCSecurity.git`.
-- Current sync state observed on 2026-06-18: `main...origin/main` at `fd52562`.
-- Record type: historical local remediation record plus current private-remote audit context.
+- Current remote: `<private_git_remote>`.
+- Historical branch sync state: redacted; exact branch-tracking output and commit SHA are intentionally omitted.
+- Record type: historical local remediation record with sanitized remote-context placeholders.
 
 ## Original Git Directory Blocker
 
@@ -52,6 +52,6 @@ Results:
 
 ## Remote State
 
-The private GitHub repository now exists and `main` has been pushed. This file is not evidence that no remote exists; it preserves the earlier local-only remediation context and records the later private-remote state.
+A controlled private-review remote existed for this historical workflow. This file intentionally omits concrete remote URLs, branch-tracking output, repository visibility state, and pushed commit SHAs. It preserves the earlier local-only remediation context without leaking private process metadata.
 
 Current release-gate rule: keep the repository private and do not create a public GitHub release, GitHub Pages deployment, Netlify deployment, or visibility change until the public release gate is closed.
