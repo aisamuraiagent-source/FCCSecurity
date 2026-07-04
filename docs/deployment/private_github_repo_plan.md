@@ -2,24 +2,24 @@
 
 Date: 2026-06-16
 
-Purpose: define the controlled path from local evidence to private GitHub, then optional public release.
+Purpose: define the controlled path from local evidence to repository review, then optional public release.
 
 ## Decision
 
-Do not create a public repository first. Create a private repository only after the review packet is ready and the public wording has been sanitized.
+Do not create a public repository first. Use controlled repository review only after the review packet is ready and the public wording has been sanitized.
 
 Current user decision/status:
 
 ```text
-Private GitHub repository created on 2026-06-18 for controlled review.
-Keep the repository private until the public release gate is deliberately closed.
+Controlled repository review was used for the historical workflow.
+Repository URL, visibility state, branch tracking state, and pushed commit identifiers are intentionally omitted.
 ```
 
 The Developer Community account is temporarily on hold pending staff review. This is not approval, endorsement, partnership, or release authorization.
 
 ## Repository Name
 
-Recommended private repository name:
+Recommended controlled repository name:
 
 ```text
 FCCSecurity
@@ -44,7 +44,7 @@ Only switch to public after:
 - security scan summary remains factual and does not say "secure" or "approved";
 - no OpenAI logo, app title branding, or model-name branding is used.
 
-## Initial Private Repo Contents
+## Initial Controlled Review Contents
 
 Include:
 
@@ -74,10 +74,10 @@ Do not include:
 
 ## Manual GitHub Steps
 
-1. Create a new private GitHub repository. Completed on 2026-06-18.
+1. Prepare a controlled review repository after final sanitation.
 2. Do not enable GitHub Pages yet.
-3. Commit the local project after final sanitation. Completed locally.
-4. Push to the private remote. Completed for `main`.
+3. Commit the local project after final sanitation.
+4. Publish only to the approved controlled remote.
 5. Attach the sanitized review packet only if needed for reviewers.
 6. Open an issue titled `Release gate: OpenAI wording and static deploy review`.
 7. Paste the checklist from `docs/deployment/public_release_gate.md`.
