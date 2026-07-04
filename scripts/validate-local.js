@@ -90,6 +90,36 @@ const absoluteLocalPathPatterns = [
 const allowedPublicEmails = new Set(["partnercomms@openai.com"]);
 const directEmailPattern = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
 const directPhonePattern = /\+\d{1,3}\s?\d{1,3}\s?\d{4,}/g;
+const privateRemoteUrlPattern = new RegExp(
+  `${"https://github\\.com/"}${"aisamuraiagent-source/"}${"FCCSecurity\\.git"}`,
+  "i"
+);
+const privateRemoteMetadataPatterns = [
+  {
+    pattern: privateRemoteUrlPattern,
+    label: "concrete private GitHub remote URL"
+  },
+  {
+    pattern: /Current remote:\s*`origin`\s*->/i,
+    label: "concrete Git remote mapping"
+  },
+  {
+    pattern: new RegExp(["Current", "sync", "state", "observed"].join("\\s+"), "i"),
+    label: "concrete Git branch sync-state label"
+  },
+  {
+    pattern: /main\.\.\.origin\/main/i,
+    label: "concrete Git branch tracking state"
+  },
+  {
+    pattern: new RegExp(["The", "private", "GitHub", "repository", "now", "exists"].join("\\s+"), "i"),
+    label: "private repository existence statement"
+  },
+  {
+    pattern: new RegExp(["private", "remote", "audit", "context"].join("[-\\s]+"), "i"),
+    label: "sensitive remote metadata marker"
+  }
+];
 
 function readRelative(file) {
   return fs.readFileSync(path.join(root, file), "utf8");
@@ -289,6 +319,9 @@ function checkPublicSurfaceSanitization() {
     }
     assert(!directPhonePattern.test(content), `direct phone number found in ${file}`);
     directPhonePattern.lastIndex = 0;
+    for (const { pattern, label } of privateRemoteMetadataPatterns) {
+      assert(!pattern.test(content), `${label} found in ${file}`);
+    }
   }
 }
 
