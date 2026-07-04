@@ -65,9 +65,10 @@ const staleLiveClaims = [
 ];
 
 const localEvidenceDirectory = "local-evidence";
+const generatedOutputDirectory = "output";
 const evidenceManifestFile = "docs/evidence/evidence_manifest.json";
 const manifestDigestAlgorithm = "sha256";
-const publicationSkipDirectories = new Set([".git", localEvidenceDirectory, "node_modules"]);
+const publicationSkipDirectories = new Set([".git", generatedOutputDirectory, localEvidenceDirectory, "node_modules"]);
 const publicationExtensions = new Set([
   ".css",
   ".csv",
@@ -286,15 +287,21 @@ function checkLiveDocClaims() {
   }
 }
 
-function checkLocalEvidencePolicy() {
+function checkSkippedPublicationDirectoryPolicy() {
+  const skippedGeneratedDirectories = [
+    generatedOutputDirectory,
+    localEvidenceDirectory
+  ];
   const gitignoreLines = readRelative(".gitignore")
     .split(/\r?\n/)
     .map((line) => line.trim());
 
-  assert(
-    gitignoreLines.includes(`${localEvidenceDirectory}/`),
-    `${localEvidenceDirectory}/ must be ignored before it is skipped by publication sanitization`
-  );
+  for (const directory of skippedGeneratedDirectories) {
+    assert(
+      gitignoreLines.includes(`${directory}/`),
+      `${directory}/ must be ignored before it is skipped by publication sanitization`
+    );
+  }
 
   if (!fs.existsSync(path.join(root, ".git"))) {
     return;
@@ -314,16 +321,18 @@ function checkLocalEvidencePolicy() {
     `git ls-files failed: ${(result.stderr || "").trim()}`
   );
 
-  const trackedFiles = result.stdout
+  for (const directory of skippedGeneratedDirectories) {
+    const trackedFiles = result.stdout
     .split("\0")
     .map((line) => line.trim())
     .filter(Boolean)
-    .filter((file) => file.split(/[\\/]/).includes(localEvidenceDirectory));
+      .filter((file) => file.split(/[\\/]/).includes(directory));
 
-  assert(
-    trackedFiles.length === 0,
-    `${localEvidenceDirectory}/ files must not be tracked: ${trackedFiles.join(", ")}`
-  );
+    assert(
+      trackedFiles.length === 0,
+      `${directory}/ files must not be tracked: ${trackedFiles.join(", ")}`
+    );
+  }
 }
 
 function checkPublicSurfaceSanitization() {
@@ -366,7 +375,7 @@ function main() {
   checkRuntimeSinks();
   checkEvidenceIntegrityContracts();
   checkLiveDocClaims();
-  checkLocalEvidencePolicy();
+  checkSkippedPublicationDirectoryPolicy();
   checkPublicSurfaceSanitization();
   checkManifest();
   console.log("local validation passed");
