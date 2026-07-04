@@ -175,7 +175,7 @@ function checkLocalEvidencePolicy() {
     return;
   }
 
-  const result = spawnSync("git", ["ls-files", "--", localEvidenceDirectory], {
+  const result = spawnSync("git", ["ls-files", "-z"], {
     cwd: root,
     encoding: "utf8"
   });
@@ -186,13 +186,14 @@ function checkLocalEvidencePolicy() {
 
   assert(
     result.status === 0,
-    `git ls-files ${localEvidenceDirectory} failed: ${(result.stderr || "").trim()}`
+    `git ls-files failed: ${(result.stderr || "").trim()}`
   );
 
   const trackedFiles = result.stdout
-    .split(/\r?\n/)
+    .split("\0")
     .map((line) => line.trim())
-    .filter(Boolean);
+    .filter(Boolean)
+    .filter((file) => file.split(/[\\/]/).includes(localEvidenceDirectory));
 
   assert(
     trackedFiles.length === 0,
