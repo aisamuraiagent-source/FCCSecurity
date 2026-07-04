@@ -51,7 +51,7 @@ Before any package or deploy use, regenerate the ZIP from the current commit, wr
 ## Excluded
 
 - `.git`
-- local browser screenshots under `local-evidence/`
+- all local evidence artifacts under `local-evidence/`, including reports, screenshots, ZIP packages, and hash receipts
 - generated image source under `<local_codex_image_cache>\generated_images`
 - any external credentials, keys, caches, or machine-local browser profile data
 
